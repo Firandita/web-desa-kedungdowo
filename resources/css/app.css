@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --sawah:#2F5233;
+  --sawah-dark:#213B25;
+  --tanah:#8B5A2B;
+  --panen:#C89B3C;
+  --krem:#FAF6EC;
+  --teks:#2B2620;
+}
+
+body{
+  font-family:'Inter', sans-serif;
+  background:var(--krem);
+  color:var(--teks);
+}
+
+h1,h2,h3,.font-display{
+  font-family:'Plus Jakarta Sans', sans-serif;
+}
+
+.terasering{
+  height:28px;
+  background:
+    linear-gradient(135deg, var(--krem) 25%, transparent 25%) 0 0,
+    linear-gradient(225deg, var(--krem) 25%, transparent 25%) 0 0,
+    var(--sawah);
+  background-size: 28px 28px;
+}
+.terasering-flip{
+  height:28px;
+  background:
+    linear-gradient(315deg, var(--krem) 25%, transparent 25%) 0 0,
+    linear-gradient(45deg, var(--krem) 25%, transparent 25%) 0 0,
+    var(--sawah);
+  background-size: 28px 28px;
+}
+
+.card-hover{ transition: transform .2s ease, box-shadow .2s ease; }
+.card-hover:hover{ transform: translateY(-4px); box-shadow: 0 12px 24px -8px rgba(47,82,51,0.25); }
+
+.img-slot{
+  background: repeating-linear-gradient(45deg, #EFE7D6, #EFE7D6 10px, #E6DCC6 10px, #E6DCC6 20px);
+  display:flex; align-items:center; justify-content:center;
+  color:#8a7f68; font-size:.75rem; text-align:center; padding:8px;
+}
