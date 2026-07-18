@@ -19,7 +19,8 @@
     <div>
       <p class="font-display font-semibold mb-3 text-[var(--panen)]">Tautan Cepat</p>
       <ul class="text-sm text-white/70 space-y-2">
-        <li><a href="{{ route('transparansi') }}" class="hover:text-white">Transparansi APBDes</a></li>
+        {{-- SEBELUMNYA: transparansi -> SEKARANG: infografis --}}
+        <li><a href="{{ route('infografis') }}" class="hover:text-white">Infografis APBDes</a></li>
         <li><a href="{{ route('layanan') }}" class="hover:text-white">Layanan Surat</a></li>
         <li><a href="{{ route('berita') }}" class="hover:text-white">Berita Desa</a></li>
         <li><a href="#" class="hover:text-white">Pengaduan Masyarakat</a></li>
@@ -27,6 +28,6 @@
     </div>
   </div>
   <p class="text-center text-xs text-white/40 mt-12">
-    © {{ date('Y') }} Pemerintah Desa Kedungdowo — Dibangun oleh Tim KKN Desa Wedoro
+    © {{ date('Y') }} Pemerintah Desa Kedungdowo — Dibangun oleh Tim KKN Desa Kedungdowo
   </p>
 </footer>

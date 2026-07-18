@@ -16,7 +16,9 @@
       <a href="{{ route('profil') }}" class="hover:text-[var(--panen)] {{ request()->routeIs('profil') ? 'text-[var(--panen)]' : '' }}">Profil Desa</a>
       <a href="{{ route('pemerintahan') }}" class="hover:text-[var(--panen)] {{ request()->routeIs('pemerintahan') ? 'text-[var(--panen)]' : '' }}">Pemerintahan</a>
       <a href="{{ route('potensi') }}" class="hover:text-[var(--panen)] {{ request()->routeIs('potensi') ? 'text-[var(--panen)]' : '' }}">Potensi Desa</a>
-      <a href="{{ route('transparansi') }}" class="hover:text-[var(--panen)] {{ request()->routeIs('transparansi') ? 'text-[var(--panen)]' : '' }}">Transparansi</a>
+      
+      {{-- Menu Infografis Desktop --}}
+      <a href="{{ route('infografis') }}" class="hover:text-[var(--panen)] {{ request()->routeIs('infografis') ? 'text-[var(--panen)]' : '' }}">Infografis</a>
       <a href="{{ route('berita') }}" class="hover:text-[var(--panen)] {{ request()->routeIs('berita') ? 'text-[var(--panen)]' : '' }}">Berita</a>
       <a href="{{ route('layanan') }}" class="hover:text-[var(--panen)] {{ request()->routeIs('layanan') ? 'text-[var(--panen)]' : '' }}">Layanan Surat</a>
       <a href="{{ route('galeri') }}" class="hover:text-[var(--panen)] {{ request()->routeIs('galeri') ? 'text-[var(--panen)]' : '' }}">Galeri</a>
@@ -28,15 +30,18 @@
 
   {{-- Menu mobile sederhana --}}
   <div id="mobileMenu" class="hidden lg:hidden border-t border-[var(--sawah)]/15 bg-[var(--krem)] px-5 py-4 flex flex-col gap-3 text-sm font-medium text-[var(--sawah-dark)]">
-    <a href="{{ route('beranda') }}">Beranda</a>
-    <a href="{{ route('profil') }}">Profil Desa</a>
-    <a href="{{ route('pemerintahan') }}">Pemerintahan</a>
-    <a href="{{ route('potensi') }}">Potensi Desa</a>
-    <a href="{{ route('transparansi') }}">Transparansi</a>
-    <a href="{{ route('berita') }}">Berita</a>
-    <a href="{{ route('layanan') }}">Layanan Surat</a>
-    <a href="{{ route('galeri') }}">Galeri</a>
-    <a href="{{ route('kontak') }}">Kontak</a>
+    <a href="{{ route('beranda') }}" class="{{ request()->routeIs('beranda') ? 'text-[var(--panen)]' : '' }}">Beranda</a>
+    <a href="{{ route('profil') }}" class="{{ request()->routeIs('profil') ? 'text-[var(--panen)]' : '' }}">Profil Desa</a>
+    <a href="{{ route('pemerintahan') }}" class="{{ request()->routeIs('pemerintahan') ? 'text-[var(--panen)]' : '' }}">Pemerintahan</a>
+    <a href="{{ route('potensi') }}" class="{{ request()->routeIs('potensi') ? 'text-[var(--panen)]' : '' }}">Potensi Desa</a>
+    
+    {{-- Menu Infografis Mobile --}}
+    <a href="{{ route('infografis') }}" class="{{ request()->routeIs('infografis') ? 'text-[var(--panen)]' : '' }}">Infografis</a>
+    
+    <a href="{{ route('berita') }}" class="{{ request()->routeIs('berita') ? 'text-[var(--panen)]' : '' }}">Berita</a>
+    <a href="{{ route('layanan') }}" class="{{ request()->routeIs('layanan') ? 'text-[var(--panen)]' : '' }}">Layanan Surat</a>
+    <a href="{{ route('galeri') }}" class="{{ request()->routeIs('galeri') ? 'text-[var(--panen)]' : '' }}">Galeri</a>
+    <a href="{{ route('kontak') }}" class="{{ request()->routeIs('kontak') ? 'text-[var(--panen)]' : '' }}">Kontak</a>
   </div>
 </header>
 
