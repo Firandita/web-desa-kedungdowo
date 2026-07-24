@@ -22,8 +22,8 @@
 
   <div class="space-y-10">
     {{-- Pupuk Organik --}}
-    <div class="grid md:grid-cols-2 gap-8 items-center">
-      {{-- GANTI: foto pupuk organik -> public/img/header.jpg --}}
+    <div class="grid md:grid-cols-2 gap-8 items-center" data-aos="fade-right">
+      {{-- GANTI: foto pupuk organik -> public/img/pupuk-griyorojokoyo.jpg --}}
       <img src="{{ asset('img/pupuk-griyorojokoyo.jpg') }}" alt="Pupuk Organik Griyorojokoyo"
            class="aspect-[4/3] w-full object-cover rounded-2xl img-slot" onerror="this.classList.add('img-slot')">
       <div>
@@ -41,7 +41,7 @@
     </div>
 
     {{-- Bank Sampah --}}
-    <div class="grid md:grid-cols-2 gap-8 items-center">
+    <div class="grid md:grid-cols-2 gap-8 items-center" data-aos="fade-left">
       <div class="md:order-2">
         {{-- GANTI: foto bank sampah -> public/img/bank-sampah-mawar.jpg --}}
         <img src="{{ asset('img/bank-sampah-mawar.jpg') }}" alt="Bank Sampah Mawar"
@@ -62,7 +62,7 @@
     </div>
 
     {{-- Peternakan --}}
-    <div class="grid md:grid-cols-2 gap-8 items-center">
+    <div class="grid md:grid-cols-2 gap-8 items-center" data-aos="fade-right">
       {{-- GANTI: foto peternakan sapi -> public/img/peternakan-sapi.jpg --}}
       <img src="{{ asset('img/peternakan-sapi.jpg') }}" alt="Peternakan Sapi Warga"
            class="aspect-[4/3] w-full object-cover rounded-2xl img-slot" onerror="this.classList.add('img-slot')">
@@ -95,37 +95,37 @@
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
       {{-- Ulangi blok card ini untuk tiap UMKM --}}
-      <div class="rounded-xl border border-[var(--sawah)]/15 p-5 card-hover">
+      <div class="rounded-xl border border-[var(--sawah)]/15 p-5 card-hover" data-aos="fade-up" data-aos-delay="0">
         <p class="font-display font-bold text-[var(--sawah-dark)] text-sm">[Nama Usaha]</p>
         <p class="text-xs text-[var(--tanah)] mt-1">Kategori: [Kuliner / Kerajinan / Pertanian]</p>
         <p class="text-xs text-[var(--teks)]/60 mt-2">Pemilik: [Nama Pemilik] · Dusun [___]</p>
         <p class="text-xs text-[var(--teks)]/60">Kontak: [No. WA]</p>
       </div>
-      <div class="rounded-xl border border-[var(--sawah)]/15 p-5 card-hover">
+      <div class="rounded-xl border border-[var(--sawah)]/15 p-5 card-hover" data-aos="fade-up" data-aos-delay="60">
         <p class="font-display font-bold text-[var(--sawah-dark)] text-sm">[Nama Usaha]</p>
         <p class="text-xs text-[var(--tanah)] mt-1">Kategori: [___]</p>
         <p class="text-xs text-[var(--teks)]/60 mt-2">Pemilik: [Nama Pemilik] · Dusun [___]</p>
         <p class="text-xs text-[var(--teks)]/60">Kontak: [No. WA]</p>
       </div>
-      <div class="rounded-xl border border-[var(--sawah)]/15 p-5 card-hover">
+      <div class="rounded-xl border border-[var(--sawah)]/15 p-5 card-hover" data-aos="fade-up" data-aos-delay="120">
         <p class="font-display font-bold text-[var(--sawah-dark)] text-sm">[Nama Usaha]</p>
         <p class="text-xs text-[var(--tanah)] mt-1">Kategori: [___]</p>
         <p class="text-xs text-[var(--teks)]/60 mt-2">Pemilik: [Nama Pemilik] · Dusun [___]</p>
         <p class="text-xs text-[var(--teks)]/60">Kontak: [No. WA]</p>
       </div>
-      <div class="rounded-xl border border-[var(--sawah)]/15 p-5 card-hover">
+      <div class="rounded-xl border border-[var(--sawah)]/15 p-5 card-hover" data-aos="fade-up" data-aos-delay="180">
         <p class="font-display font-bold text-[var(--sawah-dark)] text-sm">[Nama Usaha]</p>
         <p class="text-xs text-[var(--tanah)] mt-1">Kategori: [___]</p>
         <p class="text-xs text-[var(--teks)]/60 mt-2">Pemilik: [Nama Pemilik] · Dusun [___]</p>
         <p class="text-xs text-[var(--teks)]/60">Kontak: [No. WA]</p>
       </div>
-      <div class="rounded-xl border border-[var(--sawah)]/15 p-5 card-hover">
+      <div class="rounded-xl border border-[var(--sawah)]/15 p-5 card-hover" data-aos="fade-up" data-aos-delay="240">
         <p class="font-display font-bold text-[var(--sawah-dark)] text-sm">[Nama Usaha]</p>
         <p class="text-xs text-[var(--tanah)] mt-1">Kategori: [___]</p>
         <p class="text-xs text-[var(--teks)]/60 mt-2">Pemilik: [Nama Pemilik] · Dusun [___]</p>
         <p class="text-xs text-[var(--teks)]/60">Kontak: [No. WA]</p>
       </div>
-      <div class="rounded-xl border border-[var(--sawah)]/15 p-5 card-hover">
+      <div class="rounded-xl border border-[var(--sawah)]/15 p-5 card-hover" data-aos="fade-up" data-aos-delay="300">
         <p class="font-display font-bold text-[var(--sawah-dark)] text-sm">[Nama Usaha]</p>
         <p class="text-xs text-[var(--tanah)] mt-1">Kategori: [___]</p>
         <p class="text-xs text-[var(--teks)]/60 mt-2">Pemilik: [Nama Pemilik] · Dusun [___]</p>

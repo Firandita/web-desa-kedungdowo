@@ -3,40 +3,37 @@
 @tailwind utilities;
 
 :root{
-  --sawah:#2F5233;
-  --sawah-dark:#213B25;
-  --tanah:#8B5A2B;
-  --panen:#C89B3C;
-  --krem:#FAF6EC;
+  /* ===== PALET DESA — hijau & kuning emas ===== */
+  --sawah:#2F5233;        /* hijau sawah tua — warna utama */
+  --sawah-dark:#1E3A23;   /* hijau lebih gelap — footer, teks kontras */
+  --panen:#E3A72E;        /* kuning emas panen — aksen utama, dominan */
+  --panen-soft:#F6DFA0;   /* kuning pastel — background section lembut */
+  --tanah:#8B5A2B;        /* coklat tanah — pendukung */
+  --krem:#FBF8F1;         /* krem hangat — background utama */
   --teks:#2B2620;
+}
+
+html{
+  overflow-x: hidden;
 }
 
 body{
   font-family:'Inter', sans-serif;
   background:var(--krem);
   color:var(--teks);
+  overflow-x: hidden;
 }
 
-h1,h2,h3,.font-display{
-  font-family:'Plus Jakarta Sans', sans-serif;
+/* Judul besar/hero & judul section sama-sama pakai Calistoga (display serif) */
+.font-display{
+  font-family:'Calistoga', serif;
+  font-weight: 400;
 }
-
-.terasering{
-  height:28px;
-  background:
-    linear-gradient(135deg, var(--krem) 25%, transparent 25%) 0 0,
-    linear-gradient(225deg, var(--krem) 25%, transparent 25%) 0 0,
-    var(--sawah);
-  background-size: 28px 28px;
+.font-section{
+  font-family:'Calistoga', serif;
+  font-weight: 400;
 }
-.terasering-flip{
-  height:28px;
-  background:
-    linear-gradient(315deg, var(--krem) 25%, transparent 25%) 0 0,
-    linear-gradient(45deg, var(--krem) 25%, transparent 25%) 0 0,
-    var(--sawah);
-  background-size: 28px 28px;
-}
+h1,h2,h3{ font-family:'Calistoga', serif; }
 
 .card-hover{ transition: transform .2s ease, box-shadow .2s ease; }
 .card-hover:hover{ transform: translateY(-4px); box-shadow: 0 12px 24px -8px rgba(47,82,51,0.25); }
@@ -45,4 +42,42 @@ h1,h2,h3,.font-display{
   background: repeating-linear-gradient(45deg, #EFE7D6, #EFE7D6 10px, #E6DCC6 10px, #E6DCC6 20px);
   display:flex; align-items:center; justify-content:center;
   color:#8a7f68; font-size:.75rem; text-align:center; padding:8px;
+}
+
+/* Animasi foto hero melayang naik-turun pelan (floating effect).
+   Murni geser posisi (translateY), TANPA scale — jadi gak ada efek zoom
+   sama sekali. Areanya udah dikasih ruang ekstra lewat -top-3/-bottom-3
+   di elemen hero-slide, biar pas geser gak nongol celah putih. */
+@keyframes heroFloat{
+  0%{ transform: translateY(0); }
+  50%{ transform: translateY(-10px); }
+  100%{ transform: translateY(0); }
+}
+.hero-zoom{
+  animation: heroFloat 6s ease-in-out infinite;
+}
+
+/* ===== WAVE DIVIDER — pengganti zigzag terasering =====
+   Nama class dipertahankan (terasering / terasering-flip) supaya halaman
+   yang sudah jadi (Profil, Pemerintahan, Potensi) otomatis ikut berubah
+   tanpa perlu edit file blade-nya satu-satu. */
+.terasering, .terasering-flip{
+  height: 56px;
+  width: 100%;
+  background-repeat: repeat-x;
+  background-size: 220px 56px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 56'%3E%3Cpath d='M0,28 C55,56 165,0 220,28 L220,56 L0,56 Z' fill='%23E3A72E'/%3E%3C/svg%3E");
+}
+.terasering-flip{
+  transform: rotate(180deg);
+}
+
+/* Ikon Google Material Symbols */
+.material-symbols-outlined{
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+  line-height: 1;
 }
