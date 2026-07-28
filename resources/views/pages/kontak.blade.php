@@ -1,22 +1,17 @@
 @extends('layouts.app')
 
+@section('title', 'Kontak')
+
 @section('content')
+
+@include('partials.page-header', [
+  'eyebrow'  => 'Hubungi Kami',
+  'title'    => 'Layanan Kontak & Pengaduan',
+  'subtitle' => 'Silakan hubungi pemerintah Desa Kedungdowo atau kirimkan aspirasi serta pengaduan Anda secara langsung demi kemajuan desa.',
+])
 
 <main class="bg-[var(--krem)] min-h-screen py-12">
     <div class="max-w-7xl mx-auto px-5 md:px-8 space-y-8">
-        
-        <!-- ========================================================================= -->
-        <!-- HEADER HALAMAN -->
-        <!-- ========================================================================= -->
-        <div class="text-center max-w-3xl mx-auto space-y-3">
-            <span class="text-xs font-bold text-[var(--sawah-dark)] bg-[var(--sawah)]/10 px-4 py-1.5 rounded-full uppercase tracking-wider shadow-sm">Hubungi Kami</span>
-            <h1 class="font-display font-extrabold text-3xl md:text-4xl text-[var(--sawah-dark)] tracking-tight uppercase pt-2">
-                Layanan Kontak & Pengaduan
-            </h1>
-            <p class="text-[var(--tanah)] text-sm md:text-base leading-relaxed">
-                Silakan hubungi pemerintah Desa Kedungdowo atau kirimkan aspirasi serta pengaduan Anda secara langsung demi kemajuan desa.
-            </p>
-        </div>
 
         <!-- ========================================================================= -->
         <!-- GRID UTAMA: INFO UTAMA & FORM PENGADUAN -->

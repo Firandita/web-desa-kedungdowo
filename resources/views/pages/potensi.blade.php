@@ -4,16 +4,11 @@
 
 @section('content')
 
-{{-- HEADER HALAMAN --}}
-<section class="bg-[var(--sawah)] text-white py-14">
-  <div class="max-w-7xl mx-auto px-5 md:px-8">
-    <p class="uppercase tracking-widest text-xs font-semibold text-[var(--panen)] mb-2">Potensi Desa</p>
-    <h1 class="font-display text-3xl md:text-4xl font-extrabold">Potensi & UMKM Desa Kedungdowo</h1>
-    <p class="text-white/80 text-sm md:text-base mt-2 max-w-2xl">Ekonomi warga berbasis pertanian, peternakan, dan pengolahan limbah organik</p>
-  </div>
-</section>
-
-<div class="terasering"></div>
+@include('partials.page-header', [
+  'eyebrow'  => 'Potensi Desa',
+  'title'    => 'Potensi & UMKM Desa Kedungdowo',
+  'subtitle' => 'Ekonomi warga berbasis pertanian, peternakan, dan pengolahan limbah organik',
+])
 
 {{-- POTENSI UTAMA (3 unggulan) --}}
 <section class="max-w-7xl mx-auto px-5 md:px-8 py-16">

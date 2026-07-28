@@ -14,6 +14,21 @@
   <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-[var(--panen)]/15 blur-3xl pointer-events-none"></div>
   <div class="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-[var(--sawah)]/10 blur-3xl pointer-events-none"></div>
 
+  <!-- {{-- siluet padi, soft/samar di belakang kolom teks biar gak polos --}}
+  <svg class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-10 w-[420px] h-[420px] opacity-[0.07] pointer-events-none hidden md:block" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="var(--sawah-dark)" stroke-width="2" fill="none">
+      <path d="M100 190 C100 150 95 110 90 60"/>
+      <path d="M90 60 C70 50 55 35 50 10"/>
+      <path d="M90 60 C75 55 65 45 62 25"/>
+      <path d="M90 55 C105 45 115 30 118 8"/>
+      <path d="M90 55 C102 48 110 38 112 22"/>
+      <path d="M100 150 C80 142 68 128 64 105"/>
+      <path d="M100 150 C120 142 132 128 136 105"/>
+      <path d="M100 110 C85 103 76 92 73 75"/>
+      <path d="M100 110 C115 103 124 92 127 75"/>
+    </g>
+  </svg> -->
+
   <div class="relative max-w-7xl mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-12 md:gap-10 items-center">
 
     {{-- KOLOM TEKS --}}
@@ -23,25 +38,26 @@
       <p class="text-[var(--tanah)] text-sm md:text-base mt-2 mb-3" data-aos="fade-up" data-aos-delay="150">Kecamatan Balen, Kabupaten Bojonegoro</p>
       <p class="mt-3 max-w-xl text-[var(--teks)]/80 text-sm md:text-base leading-relaxed" data-aos="fade-up" data-aos-delay="200">Desa agraris yang dikenal lewat olahan pupuk organik warga, gerakan bank sampah, dan tradisi Sedekah Bumi yang masih lestari hingga kini.</p>
       <div class="mt-7 flex flex-wrap gap-3" data-aos="fade-up" data-aos-delay="300">
-        <a href="{{ route('profil') }}" class="bg-[var(--panen)] text-[var(--sawah-dark)] font-semibold px-6 py-3 rounded-full text-sm shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all">Jelajahi Desa</a>
-        <a href="{{ route('layanan') }}" class="border border-[var(--sawah-dark)]/30 text-[var(--sawah-dark)] px-6 py-3 rounded-full text-sm font-medium hover:bg-[var(--sawah-dark)] hover:text-white transition-all">Layanan Surat</a>
+        <a href="{{ route('profil') }}" class="btn-solid">Jelajahi Desa</a>
+        <a href="{{ route('layanan') }}" class="btn-outline">Layanan Surat</a>
       </div>
     </div>
 
     {{-- KOLOM FOTO: CARD SLIDER --}}
     <div class="relative" data-aos="fade-left" data-aos-delay="150">
-      {{-- blok warna dekoratif di belakang foto, sedikit offset biar berlapis --}}
-      <div class="absolute -top-5 -right-5 w-full h-full bg-[var(--panen)] rounded-[2rem] hidden sm:block"></div>
-      <div class="absolute -bottom-5 -left-5 w-24 h-24 rounded-2xl bg-[var(--sawah)]/20 hidden sm:block"></div>
-
-      <div class="relative rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white h-[300px] sm:h-[360px] md:h-[420px]">
-        {{-- GANTI: 3 foto slider -> public/img/hero-sawah-1.jpg, hero-sawah-2.jpg, hero-sawah-3.jpg --}}
-        <div class="hero-slide hero-zoom absolute -top-3 -bottom-3 inset-x-0 bg-cover bg-center transition-opacity duration-1000 opacity-100 img-slot">
-             <img src="{{ asset('img/kepala-desa.jpg') }}" alt="Kepala Desa Kedungdowo" onerror="this.classList.add('img-slot')" data-aos="fade-left"></div>
-        <div class="hero-slide hero-zoom absolute -top-3 -bottom-3 inset-x-0 bg-cover bg-center transition-opacity duration-1000 opacity-0 img-slot"
-           ><img src="{{ asset('img/header2.jpg') }}" alt="Kepala Desa Kedungdowo" onerror="this.classList.add('img-slot')" data-aos="fade-left"></div>
-        <div class="hero-slide hero-zoom absolute -top-3 -bottom-3 inset-x-0 bg-cover bg-center transition-opacity duration-1000 opacity-0 img-slot"
-             ><img src="{{ asset('img/header1.jpg') }}" alt="Kepala Desa Kedungdowo" onerror="this.classList.add('img-slot')" data-aos="fade-left"></div>
+      <div class="relative rounded-2xl overflow-hidden shadow-xl border border-[var(--sawah)]/15 h-[300px] sm:h-[360px] md:h-[420px]">
+        {{-- GANTI: 3 foto slider -> public/img/kepala-desa.jpg, header2.jpg, header1.jpg (nama file jangan diubah)
+             Animasi float (hero-zoom) cuma nempel di <img> ini sendiri, BUKAN di frame/card-nya,
+             jadi yang gerak cuma fotonya. --}}
+        <img src="{{ asset('img/kepala-desa.jpg') }}" alt="Sawah Kedungdowo 1"
+             class="hero-slide hero-zoom absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100 img-slot"
+             onerror="this.classList.add('img-slot')">
+        <img src="{{ asset('img/header2.jpg') }}" alt="Sawah Kedungdowo 2"
+             class="hero-slide hero-zoom absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0 img-slot"
+             onerror="this.classList.add('img-slot')">
+        <img src="{{ asset('img/header1.jpg') }}" alt="Sawah Kedungdowo 3"
+             class="hero-slide hero-zoom absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0 img-slot"
+             onerror="this.classList.add('img-slot')">
 
         {{-- gradasi tipis di bawah foto biar dots kebaca --}}
         <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/40 to-transparent z-[6] pointer-events-none"></div>
@@ -130,7 +146,7 @@
     </p>
     <p class="mt-5 font-section font-bold text-[var(--sawah-dark)]">Yuyus Adi Setiawan, S.Pd.</p>
     <p class="text-sm text-[var(--tanah)]">Kepala Desa Kedungdowo</p>
-    <a href="{{ route('profil') }}" class="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold text-[var(--sawah-dark)] border border-[var(--sawah-dark)]/30 hover:bg-[var(--sawah-dark)] hover:text-white px-5 py-2.5 rounded-full transition-all duration-200">Baca profil lengkap desa <span class="material-symbols-outlined text-base">arrow_forward</span></a>
+    <a href="{{ route('profil') }}" class="btn-solid mt-5">Baca profil lengkap desa</a>
   </div>
 </section>
 
@@ -168,7 +184,7 @@
       </div>
     </div>
     <div class="text-center mt-8">
-      <a href="{{ route('potensi') }}" class="text-sm font-semibold text-[var(--sawah-dark)] underline underline-offset-4">Lihat semua potensi desa →</a>
+      <a href="{{ route('potensi') }}" class="btn-outline">Lihat semua potensi desa</a>
     </div>
   </div>
 </section>

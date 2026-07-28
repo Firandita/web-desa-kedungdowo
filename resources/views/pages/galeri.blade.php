@@ -1,21 +1,17 @@
 @extends('layouts.app') {{-- Sesuaikan dengan nama file layout utama projekmu --}}
 
+@section('title', 'Galeri')
+
 @section('content')
+
+@include('partials.page-header', [
+  'eyebrow'  => 'Dokumentasi',
+  'title'    => 'Galeri Kegiatan Desa',
+  'subtitle' => 'Dokumentasi transparansi pelaksanaan program kerja dan aktivitas masyarakat Desa Kedungdowo.',
+])
 
 <main class="bg-[var(--krem)] min-h-screen py-10">
     <div class="max-w-7xl mx-auto px-5 md:px-8 space-y-10">
-        
-        <!-- ========================================================================= -->
-        <!-- HEADER GALERI -->
-        <!-- ========================================================================= -->
-        <div class="border-b border-[var(--sawah)]/20 pb-6 text-center md:text-left">
-            <h1 class="font-display font-extrabold text-3xl md:text-4xl text-[var(--sawah-dark)] tracking-tight uppercase">
-                Galeri Kegiatan Desa
-            </h1>
-            <p class="text-[var(--tanah)] mt-1 text-sm md:text-base">
-                Dokumentasi transparansi pelaksanaan program kerja dan aktivitas masyarakat Desa Kedungdowo.
-            </p>
-        </div>
 
         <!-- ========================================================================= -->
         <!-- FILTER KATEGORI (TAB SYSTEM) -->

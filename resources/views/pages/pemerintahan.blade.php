@@ -4,16 +4,11 @@
 
 @section('content')
 
-{{-- HEADER HALAMAN --}}
-<section class="bg-[var(--sawah)] text-white py-14">
-  <div class="max-w-7xl mx-auto px-5 md:px-8">
-    <p class="uppercase tracking-widest text-xs font-semibold text-[var(--panen)] mb-2">Pemerintahan</p>
-    <h1 class="font-display text-3xl md:text-4xl font-extrabold">Pemerintahan Desa Kedungdowo</h1>
-    <p class="text-white/80 text-sm md:text-base mt-2 max-w-2xl">Struktur organisasi, BPD, dan informasi pelayanan kantor desa</p>
-  </div>
-</section>
-
-<div class="terasering"></div>
+@include('partials.page-header', [
+  'eyebrow'  => 'Pemerintahan',
+  'title'    => 'Pemerintahan Desa Kedungdowo',
+  'subtitle' => 'Struktur organisasi, BPD, dan informasi pelayanan kantor desa',
+])
 
 {{-- STRUKTUR PERANGKAT DESA --}}
 <section class="max-w-7xl mx-auto px-5 md:px-8 py-16">

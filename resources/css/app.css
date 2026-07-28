@@ -44,18 +44,69 @@ h1,h2,h3{ font-family:'Calistoga', serif; }
   color:#8a7f68; font-size:.75rem; text-align:center; padding:8px;
 }
 
-/* Animasi foto hero melayang naik-turun pelan (floating effect).
-   Murni geser posisi (translateY), TANPA scale — jadi gak ada efek zoom
-   sama sekali. Areanya udah dikasih ruang ekstra lewat -top-3/-bottom-3
-   di elemen hero-slide, biar pas geser gak nongol celah putih. */
+/* Animasi foto hero melayang pelan.
+   PENTING: pakai animasi object-position (setara background-position tapi
+   buat elemen <img>), jadi gambar 100% TIDAK pernah membesar/zoom — cuma
+   pan/geser posisi crop-nya dikit secara vertikal. */
 @keyframes heroFloat{
-  0%{ transform: translateY(0); }
-  50%{ transform: translateY(-10px); }
-  100%{ transform: translateY(0); }
+  0%{ object-position: center 50%; }
+  50%{ object-position: center 38%; }
+  100%{ object-position: center 50%; }
 }
 .hero-zoom{
   animation: heroFloat 6s ease-in-out infinite;
 }
+
+/* Garis bawah halaman aktif di navbar — tipis, lebih pendek dari teksnya */
+.nav-active{
+  position: relative;
+}
+.nav-active::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--panen);
+}
+
+/* Tombol standar dipakai di seluruh web (hero, sambutan, dll) biar seragam,
+   gak pakai underline sama sekali. */
+.btn-solid{
+  display:inline-flex; align-items:center; gap:.4rem;
+  background: var(--panen);
+  color: var(--sawah-dark);
+  font-weight:600;
+  font-size:.875rem;
+  padding:.75rem 1.5rem;
+  border-radius:9999px;
+  text-decoration:none;
+  box-shadow: 0 4px 10px -4px rgba(227,167,46,0.5);
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+.btn-solid:hover{
+  box-shadow: 0 8px 16px -6px rgba(227,167,46,0.6);
+  transform: translateY(-2px);
+}
+.btn-outline{
+  display:inline-flex; align-items:center; gap:.4rem;
+  border:1px solid rgba(30,58,35,0.3);
+  color: var(--sawah-dark);
+  font-weight:500;
+  font-size:.875rem;
+  padding:.75rem 1.5rem;
+  border-radius:9999px;
+  text-decoration:none;
+  transition: background-color .2s ease, color .2s ease;
+}
+.btn-outline:hover{
+  background: var(--sawah-dark);
+  color:#fff;
+}
+a{ text-decoration:none; }
 
 /* ===== WAVE DIVIDER — pengganti zigzag terasering =====
    Nama class dipertahankan (terasering / terasering-flip) supaya halaman

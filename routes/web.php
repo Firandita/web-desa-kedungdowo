@@ -19,7 +19,7 @@ Route::get('/potensi', function () {
 })->name('potensi');
 
 Route::get('/transparansi', function () {
-    return view('pages.beranda'); // sementara, belum dibuat halamannya
+    return view('pages.infografis');
 })->name('transparansi');
 
 Route::get('/berita', function () {

@@ -1,21 +1,17 @@
 @extends('layouts.app') {{-- Sesuaikan dengan nama file layout utama projekmu --}}
 
+@section('title', 'Layanan Surat')
+
 @section('content')
+
+@include('partials.page-header', [
+  'eyebrow'  => 'Layanan Surat',
+  'title'    => 'Pelayanan Surat Pengantar & Keterangan',
+  'subtitle' => 'Kecamatan Balen, Kabupaten Bojonegoro — Berikan kemudahan pengurusan administrasi warga secara transparan.',
+])
 
 <main class="bg-[var(--krem)] min-h-screen py-10">
     <div class="max-w-7xl mx-auto px-5 md:px-8 space-y-12">
-        
-        <!-- ========================================================================= -->
-        <!-- HEADER LAYANAN SURAT -->
-        <!-- ========================================================================= -->
-        <div class="border-b border-[var(--sawah)]/20 pb-6">
-            <h1 class="font-display font-extrabold text-3xl md:text-4xl text-[var(--sawah-dark)] tracking-tight">
-                PELAYANAN SURAT PENGANTAR & KETERANGAN
-            </h1>
-            <p class="text-[var(--tanah)] mt-1 text-sm md:text-base">
-                Kecamatan Balen, Kabupaten Bojonegoro — Berikan kemudahan pengurusan administrasi warga secara transparan.
-            </p>
-        </div>
 
         <!-- ========================================================================= -->
         <!-- ALUR PENGAJUAN SURAT -->

@@ -4,16 +4,11 @@
 
 @section('content')
 
-{{-- HEADER HALAMAN --}}
-<section class="bg-[var(--sawah)] text-white py-14">
-  <div class="max-w-7xl mx-auto px-5 md:px-8">
-    <p class="uppercase tracking-widest text-xs font-semibold text-[var(--panen)] mb-2">Profil Desa</p>
-    <h1 class="font-display text-3xl md:text-4xl font-extrabold">Mengenal Desa Kedungdowo</h1>
-    <p class="text-white/80 text-sm md:text-base mt-2 max-w-2xl">Kecamatan Balen, Kabupaten Bojonegoro, Provinsi Jawa Timur</p>
-  </div>
-</section>
-
-<div class="terasering"></div>
+@include('partials.page-header', [
+  'eyebrow'  => 'Profil Desa',
+  'title'    => 'Mengenal Desa Kedungdowo',
+  'subtitle' => 'Kecamatan Balen, Kabupaten Bojonegoro, Provinsi Jawa Timur',
+])
 
 {{-- SAMBUTAN KADES (LENGKAP) --}}
 <section class="max-w-7xl mx-auto px-5 md:px-8 py-16 grid md:grid-cols-2 gap-10 items-center">
