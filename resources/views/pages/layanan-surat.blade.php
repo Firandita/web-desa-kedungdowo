@@ -156,119 +156,46 @@
             </p>
             
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
-                <!-- Surat 1 -->
-                <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm card-hover flex flex-col justify-between gap-4" data-aos="fade-up" data-aos-delay="0">
-                    <div class="flex items-start gap-3">
-                        <span class="material-symbols-outlined text-3xl text-[var(--sawah-dark)] p-2 bg-[var(--sawah)]/10 rounded-lg">description</span>
-                        <div>
-                            <h4 class="font-bold text-[var(--teks)] text-sm leading-tight">Surat Keterangan Tidak Mampu (SKTM)</h4>
-                            <p class="text-xs text-[var(--teks)]/50 mt-1">Format: Word (.doc)</p>
+                @if(isset($suratList) && count($suratList) > 0)
+                    @foreach($suratList as $index => $surat)
+                        <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm card-hover flex flex-col justify-between gap-4" data-aos="fade-up" data-aos-delay="{{ $index * 50 }}">
+                            <div class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-3xl text-[var(--sawah-dark)] p-2 bg-[var(--sawah)]/10 rounded-lg">description</span>
+                                <div>
+                                    <h4 class="font-bold text-[var(--teks)] text-sm leading-tight">{{ $surat->nama_surat }}</h4>
+                                    <p class="text-xs text-[var(--teks)]/50 mt-1">Estimasi: {{ $surat->estimasi_waktu ?? '1-2 Hari Kerja' }}</p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="openModal('{{ addslashes($surat->nama_surat) }}', '{{ addslashes($surat->deskripsi) }}', '{{ $surat->file_template ? asset('storage/' . $surat->file_template) : '#' }}')" class="flex items-center justify-center gap-1 bg-[var(--sawah)]/10 hover:bg-[var(--sawah)]/15 text-[var(--teks)]/85 font-medium text-xs py-2.5 rounded-lg transition-all duration-200 cursor-pointer">
+                                    <span class="material-symbols-outlined text-sm">visibility</span> Detail
+                                </button>
+                                <a href="{{ $surat->file_template ? asset('storage/' . $surat->file_template) : '#' }}" class="flex items-center justify-center gap-1 bg-[var(--sawah-dark)] text-white hover:bg-[var(--sawah)] font-medium text-xs py-2.5 rounded-lg transition-all duration-200">
+                                    <span class="material-symbols-outlined text-sm">download</span> Unduh
+                                </a>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <!-- Fallback Static Items jika belum ada data -->
+                    <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm card-hover flex flex-col justify-between gap-4">
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-3xl text-[var(--sawah-dark)] p-2 bg-[var(--sawah)]/10 rounded-lg">description</span>
+                            <div>
+                                <h4 class="font-bold text-[var(--teks)] text-sm leading-tight">Surat Keterangan Usaha (SKU)</h4>
+                                <p class="text-xs text-[var(--teks)]/50 mt-1">Format: Word (.doc)</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="openModal('SKU', 'Digunakan sebagai bukti legalitas kepemilikan usaha mikro/kecil untuk keperluan syarat pengajuan modal di Bank.', '#')" class="flex items-center justify-center gap-1 bg-[var(--sawah)]/10 hover:bg-[var(--sawah)]/15 text-[var(--teks)]/85 font-medium text-xs py-2.5 rounded-lg transition-all duration-200">
+                                <span class="material-symbols-outlined text-sm">visibility</span> Detail
+                            </button>
+                            <a href="#" class="flex items-center justify-center gap-1 bg-[var(--sawah-dark)] text-white hover:bg-[var(--sawah)] font-medium text-xs py-2.5 rounded-lg transition-all duration-200">
+                                <span class="material-symbols-outlined text-sm">download</span> Unduh
+                            </a>
                         </div>
                     </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button onclick="openModal('SKTM', 'Digunakan untuk pengajuan beasiswa, jaminan kesehatan nasional (KIS/PBI), keringanan biaya sekolah, atau bantuan sosial dari pemerintah.', '#')" class="flex items-center justify-center gap-1 bg-[var(--sawah)]/10 hover:bg-[var(--sawah)]/15 text-[var(--teks)]/85 font-medium text-xs py-2.5 rounded-lg transition-all duration-200">
-                            <span class="material-symbols-outlined text-sm">visibility</span> Detail
-                        </button>
-                        <a href="#" class="flex items-center justify-center gap-1 bg-[var(--sawah-dark)] text-white hover:bg-[var(--sawah)] font-medium text-xs py-2.5 rounded-lg transition-all duration-200">
-                            <span class="material-symbols-outlined text-sm">download</span> Unduh
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Surat 2 -->
-                <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm card-hover flex flex-col justify-between gap-4" data-aos="fade-up" data-aos-delay="75">
-                    <div class="flex items-start gap-3">
-                        <span class="material-symbols-outlined text-3xl text-[var(--sawah-dark)] p-2 bg-[var(--sawah)]/10 rounded-lg">description</span>
-                        <div>
-                            <h4 class="font-bold text-[var(--teks)] text-sm leading-tight">Surat Keterangan Usaha (SKU)</h4>
-                            <p class="text-xs text-[var(--teks)]/50 mt-1">Format: Word (.doc)</p>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button onclick="openModal('SKU', 'Digunakan sebagai bukti legalitas kepemilikan usaha mikro/kecil untuk keperluan syarat pengajuan modal atau KUR di Bank.', '#')" class="flex items-center justify-center gap-1 bg-[var(--sawah)]/10 hover:bg-[var(--sawah)]/15 text-[var(--teks)]/85 font-medium text-xs py-2.5 rounded-lg transition-all duration-200">
-                            <span class="material-symbols-outlined text-sm">visibility</span> Detail
-                        </button>
-                        <a href="#" class="flex items-center justify-center gap-1 bg-[var(--sawah-dark)] text-white hover:bg-[var(--sawah)] font-medium text-xs py-2.5 rounded-lg transition-all duration-200">
-                            <span class="material-symbols-outlined text-sm">download</span> Unduh
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Surat 3 -->
-                <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm card-hover flex flex-col justify-between gap-4" data-aos="fade-up" data-aos-delay="150">
-                    <div class="flex items-start gap-3">
-                        <span class="material-symbols-outlined text-3xl text-[var(--sawah-dark)] p-2 bg-[var(--sawah)]/10 rounded-lg">description</span>
-                        <div>
-                            <h4 class="font-bold text-[var(--teks)] text-sm leading-tight">Surat Keterangan Domisili Warga</h4>
-                            <p class="text-xs text-[var(--teks)]/50 mt-1">Format: Word (.doc)</p>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button onclick="openModal('Surat Keterangan Domisili', 'Surat resmi pembuktian keberadaan tempat tinggal bagi warga pendatang baru ataupun warga asli untuk keperluan pembukaan rekening bank atau lamaran kerja.', '#')" class="flex items-center justify-center gap-1 bg-[var(--sawah)]/10 hover:bg-[var(--sawah)]/15 text-[var(--teks)]/85 font-medium text-xs py-2.5 rounded-lg transition-all duration-200">
-                            <span class="material-symbols-outlined text-sm">visibility</span> Detail
-                        </button>
-                        <a href="#" class="flex items-center justify-center gap-1 bg-[var(--sawah-dark)] text-white hover:bg-[var(--sawah)] font-medium text-xs py-2.5 rounded-lg transition-all duration-200">
-                            <span class="material-symbols-outlined text-sm">download</span> Unduh
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Surat 4 -->
-                <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm card-hover flex flex-col justify-between gap-4" data-aos="fade-up" data-aos-delay="225">
-                    <div class="flex items-start gap-3">
-                        <span class="material-symbols-outlined text-3xl text-[var(--sawah-dark)] p-2 bg-[var(--sawah)]/10 rounded-lg">description</span>
-                        <div>
-                            <h4 class="font-bold text-[var(--teks)] text-sm leading-tight">Surat Pengantar Pengurusan KTP/KK</h4>
-                            <p class="text-xs text-[var(--teks)]/50 mt-1">Format: Word (.doc)</p>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button onclick="openModal('Surat Pengantar KTP/KK', 'Surat pengantar wajib dari desa guna melakukan penerbitan KK baru, pembaruan data KK, atau pembuatan KTP-el baru di Kantor Kecamatan.', '#')" class="flex items-center justify-center gap-1 bg-[var(--sawah)]/10 hover:bg-[var(--sawah)]/15 text-[var(--teks)]/85 font-medium text-xs py-2.5 rounded-lg transition-all duration-200">
-                            <span class="material-symbols-outlined text-sm">visibility</span> Detail
-                        </button>
-                        <a href="#" class="flex items-center justify-center gap-1 bg-[var(--sawah-dark)] text-white hover:bg-[var(--sawah)] font-medium text-xs py-2.5 rounded-lg transition-all duration-200">
-                            <span class="material-symbols-outlined text-sm">download</span> Unduh
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Surat 5 -->
-                <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm card-hover flex flex-col justify-between gap-4" data-aos="fade-up" data-aos-delay="300">
-                    <div class="flex items-start gap-3">
-                        <span class="material-symbols-outlined text-3xl text-[var(--sawah-dark)] p-2 bg-[var(--sawah)]/10 rounded-lg">description</span>
-                        <div>
-                            <h4 class="font-bold text-[var(--teks)] text-sm leading-tight">Surat Keterangan Kelahiran / Kematian</h4>
-                            <p class="text-xs text-[var(--teks)]/50 mt-1">Format: Word (.doc)</p>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button onclick="openModal('Surat Kelahiran/Kematian', 'Berfungsi sebagai bukti otentik pelaporan peristiwa hukum guna dasar penerbitan Akta Kelahiran atau Akta Kematian resmi dari Dispendukcapil.', '#')" class="flex items-center justify-center gap-1 bg-[var(--sawah)]/10 hover:bg-[var(--sawah)]/15 text-[var(--teks)]/85 font-medium text-xs py-2.5 rounded-lg transition-all duration-200">
-                            <span class="material-symbols-outlined text-sm">visibility</span> Detail
-                        </button>
-                        <a href="#" class="flex items-center justify-center gap-1 bg-[var(--sawah-dark)] text-white hover:bg-[var(--sawah)] font-medium text-xs py-2.5 rounded-lg transition-all duration-200">
-                            <span class="material-symbols-outlined text-sm">download</span> Unduh
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Surat 6 -->
-                <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm card-hover flex flex-col justify-between gap-4" data-aos="fade-up" data-aos-delay="375">
-                    <div class="flex items-start gap-3">
-                        <span class="material-symbols-outlined text-3xl text-[var(--sawah-dark)] p-2 bg-[var(--sawah)]/10 rounded-lg">description</span>
-                        <div>
-                            <h4 class="font-bold text-[var(--teks)] text-sm leading-tight">Surat Pengantar Izin Keramaian / Acara</h4>
-                            <p class="text-xs text-[var(--teks)]/50 mt-1">Format: Word (.doc)</p>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button onclick="openModal('Surat Izin Keramaian', 'Diperlukan bagi warga yang ingin mengadakan hajatan besar, hiburan panggung, atau event publik demi keamanan bersama koordinasi dengan Babinkamtibmas.', '#')" class="flex items-center justify-center gap-1 bg-[var(--sawah)]/10 hover:bg-[var(--sawah)]/15 text-[var(--teks)]/85 font-medium text-xs py-2.5 rounded-lg transition-all duration-200">
-                            <span class="material-symbols-outlined text-sm">visibility</span> Detail
-                        </button>
-                        <a href="#" class="flex items-center justify-center gap-1 bg-[var(--sawah-dark)] text-white hover:bg-[var(--sawah)] font-medium text-xs py-2.5 rounded-lg transition-all duration-200">
-                            <span class="material-symbols-outlined text-sm">download</span> Unduh
-                        </a>
-                    </div>
-                </div>
+                @endif
             </div>
         </div>
 

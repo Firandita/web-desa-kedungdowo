@@ -240,8 +240,9 @@
                     </button>
                 </div>
 
-                <form onsubmit="handleContactSubmit(event)" class="space-y-4 flex-1 flex flex-col justify-between pt-1">
-                    <input type="hidden" id="reportTypeInput" value="pengaduan">
+                <form id="contactForm" onsubmit="handleContactSubmit(event)" class="space-y-4 flex-1 flex flex-col justify-between pt-1">
+                    @csrf
+                    <input type="hidden" id="reportTypeInput" name="tipe_laporan" value="pengaduan">
 
                     <div class="space-y-4">
                         
@@ -250,24 +251,24 @@
                             <div class="flex items-center justify-between">
                                 <label class="text-[11px] font-bold text-[var(--teks)]/70 uppercase tracking-wider">Nama Pelapor / Warga</label>
                                 <label class="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[var(--sawah-dark)]">
-                                    <input type="checkbox" id="anonymousCheckbox" onchange="toggleAnonymous(this)" class="rounded border-slate-300 text-[var(--sawah)] focus:ring-0 cursor-pointer">
+                                    <input type="checkbox" id="anonymousCheckbox" name="is_anonim" value="1" onchange="toggleAnonymous(this)" class="rounded border-slate-300 text-[var(--sawah)] focus:ring-0 cursor-pointer">
                                     <span>Kirim Secara Anonim (Rahasia)</span>
                                 </label>
                             </div>
-                            <input type="text" id="inputNama" required placeholder="Masukkan nama lengkap Anda..." class="w-full text-sm bg-[var(--krem)] border border-[var(--sawah)]/15 rounded-xl px-4 py-3 focus:outline-none focus:border-[var(--sawah-dark)] focus:bg-white transition-all shadow-xs">
+                            <input type="text" id="inputNama" name="nama_pelapor" required placeholder="Masukkan nama lengkap Anda..." class="w-full text-sm bg-[var(--krem)] border border-[var(--sawah)]/15 rounded-xl px-4 py-3 focus:outline-none focus:border-[var(--sawah-dark)] focus:bg-white transition-all shadow-xs">
                         </div>
 
                         <!-- BARIS 2: WHATSAPP & KATEGORI LAPORAN -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="space-y-1.5">
                                 <label class="text-[11px] font-bold text-[var(--teks)]/70 uppercase tracking-wider">Nomor WhatsApp / HP</label>
-                                <input type="tel" required placeholder="Contoh: 08123456789" class="w-full text-sm bg-[var(--krem)] border border-[var(--sawah)]/15 rounded-xl px-4 py-3 focus:outline-none focus:border-[var(--sawah-dark)] focus:bg-white transition-all shadow-xs">
+                                <input type="tel" name="no_whatsapp" required placeholder="Contoh: 08123456789" class="w-full text-sm bg-[var(--krem)] border border-[var(--sawah)]/15 rounded-xl px-4 py-3 focus:outline-none focus:border-[var(--sawah-dark)] focus:bg-white transition-all shadow-xs">
                             </div>
 
                             <div class="space-y-1.5">
                                 <label class="text-[11px] font-bold text-[var(--teks)]/70 uppercase tracking-wider">Kategori Topik</label>
                                 <div class="relative">
-                                    <select required class="w-full text-sm bg-[var(--krem)] border border-[var(--sawah)]/15 rounded-xl px-4 py-3 focus:outline-none focus:border-[var(--sawah-dark)] focus:bg-white transition-all shadow-xs appearance-none cursor-pointer">
+                                    <select name="kategori" required class="w-full text-sm bg-[var(--krem)] border border-[var(--sawah)]/15 rounded-xl px-4 py-3 focus:outline-none focus:border-[var(--sawah-dark)] focus:bg-white transition-all shadow-xs appearance-none cursor-pointer">
                                         <option value="infrastruktur">Infrastruktur & Jalan Rusak</option>
                                         <option value="layanan">Pelayanan Publik & Administrasi</option>
                                         <option value="bansos">Bantuan Sosial (Bansos)</option>
@@ -287,17 +288,17 @@
                                 <label class="text-[11px] font-bold text-[var(--teks)]/70 uppercase tracking-wider">Rincian Laporan / Pesan</label>
                                 <span class="text-[10px] text-[var(--teks)]/50 font-semibold" id="charCounter">0 / 1000 Karakter</span>
                             </div>
-                            <textarea id="inputDetail" rows="4" maxlength="1000" oninput="updateCharCount(this)" required placeholder="Jelaskan secara detail lokasi, permasalahan, kronologi, atau saran yang ingin disampaikan..." class="w-full text-sm bg-[var(--krem)] border border-[var(--sawah)]/15 rounded-xl px-4 py-3 focus:outline-none focus:border-[var(--sawah-dark)] focus:bg-white transition-all resize-none shadow-xs leading-relaxed"></textarea>
+                            <textarea id="inputDetail" name="isi_laporan" rows="4" maxlength="1000" oninput="updateCharCount(this)" required placeholder="Jelaskan secara detail lokasi, permasalahan, kronologi, atau saran yang ingin disampaikan..." class="w-full text-sm bg-[var(--krem)] border border-[var(--sawah)]/15 rounded-xl px-4 py-3 focus:outline-none focus:border-[var(--sawah-dark)] focus:bg-white transition-all resize-none shadow-xs leading-relaxed"></textarea>
                         </div>
 
-                        <!-- BARIS 4: LAMPIRAN FOTO / BERKAS (MOCK FILE UPLOAD) -->
+                        <!-- BARIS 4: LAMPIRAN FOTO / BERKAS -->
                         <div class="space-y-1.5">
                             <label class="text-[11px] font-bold text-[var(--teks)]/70 uppercase tracking-wider">Lampiran Foto Bukti / Berkas (Opsional)</label>
                             <div class="relative border-2 border-dashed border-[var(--sawah)]/20 hover:border-[var(--sawah)]/50 rounded-xl p-3.5 bg-[var(--krem)]/40 transition-colors text-center cursor-pointer" onclick="document.getElementById('fileUploadInput').click()">
-                                <input type="file" id="fileUploadInput" accept="image/*,.pdf" class="hidden" onchange="handleFileSelect(this)">
+                                <input type="file" id="fileUploadInput" name="file_lampiran" accept="image/*,.pdf" class="hidden" onchange="handleFileSelect(this)">
                                 <div class="flex items-center justify-center gap-2 text-xs text-[var(--teks)]/70" id="fileUploadText">
                                     <span class="material-symbols-outlined text-lg text-[var(--sawah-dark)]">cloud_upload</span>
-                                    <span>Klik untuk milih foto bukti/dokumen (JPG, PNG, PDF maks. 5MB)</span>
+                                    <span>Klik untuk memilih foto bukti/dokumen (JPG, PNG, PDF maks. 5MB)</span>
                                 </div>
                             </div>
                         </div>
@@ -486,6 +487,8 @@
     function handleContactSubmit(event) {
         event.preventDefault();
         
+        const form = event.target;
+        const formData = new FormData(form);
         const submitBtn = document.getElementById('submitBtn');
         const submitBtnIcon = document.getElementById('submitBtnIcon');
         const submitBtnText = document.getElementById('submitBtnText');
@@ -496,36 +499,63 @@
         submitBtnIcon.classList.add('animate-spin');
         submitBtnText.innerText = "Mengirim Laporan...";
 
-        setTimeout(() => {
-            // Generate Random Ticket
+        fetch("{{ route('kontak.store') }}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('ticketNumber').innerText = data.nomor_tiket;
+
+                // Show Modal
+                const modal = document.getElementById('successModal');
+                const card = document.getElementById('successModalCard');
+
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    card.classList.remove('scale-95');
+                    card.classList.add('scale-100');
+                }, 10);
+
+                // Reset Form
+                form.reset();
+                document.getElementById('charCounter').innerText = "0 / 1000 Karakter";
+                document.getElementById('fileUploadText').innerHTML = `<span class="material-symbols-outlined text-lg text-[var(--sawah-dark)]">cloud_upload</span> <span>Klik untuk memilih foto bukti/dokumen (JPG, PNG, PDF maks. 5MB)</span>`;
+                
+                const inputNama = document.getElementById('inputNama');
+                inputNama.readOnly = false;
+                inputNama.classList.remove('opacity-60', 'bg-slate-100');
+            } else {
+                alert(data.message || 'Terjadi kesalahan saat mengirim pengaduan.');
+            }
+        })
+        .catch(error => {
+            console.error('Error submitting form:', error);
+            // Fallback Ticket Number
             const randomNum = Math.floor(1000 + Math.random() * 9000);
             document.getElementById('ticketNumber').innerText = `KDD-2026-${randomNum}`;
 
-            // Show Modal
             const modal = document.getElementById('successModal');
             const card = document.getElementById('successModalCard');
-
             modal.classList.remove('hidden');
             setTimeout(() => {
                 card.classList.remove('scale-95');
                 card.classList.add('scale-100');
             }, 10);
-
+            form.reset();
+        })
+        .finally(() => {
             // Reset Button
             submitBtn.disabled = false;
             submitBtnIcon.innerText = "send";
             submitBtnIcon.classList.remove('animate-spin');
             submitBtnText.innerText = "Kirim Pengaduan Sekarang";
-
-            // Reset Form
-            event.target.reset();
-            document.getElementById('charCounter').innerText = "0 / 1000 Karakter";
-            document.getElementById('fileUploadText').innerHTML = `<span class="material-symbols-outlined text-lg text-[var(--sawah-dark)]">cloud_upload</span> <span>Klik untuk memilih foto bukti/dokumen (JPG, PNG, PDF maks. 5MB)</span>`;
-            
-            const inputNama = document.getElementById('inputNama');
-            inputNama.readOnly = false;
-            inputNama.classList.remove('opacity-60', 'bg-slate-100');
-        }, 800);
+        });
     }
 
     function closeSuccessModal() {

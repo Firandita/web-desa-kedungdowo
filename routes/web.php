@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\LayananSuratController;
+use App\Http\Controllers\KontakController;
 
 Route::get('/', function () {
     return view('pages.beranda');
@@ -22,28 +26,16 @@ Route::get('/transparansi', function () {
     return view('pages.infografis');
 })->name('transparansi');
 
-Route::get('/berita', function () {
-    return view('pages.berita');
-})->name('berita');
+// Modul Berita
+Route::get('/berita', [BeritaController::class, 'index'])->name('berita');
+Route::get('/berita/{id}', [BeritaController::class, 'show'])->name('berita.detail');
 
-Route::get('/berita/{id}', function ($id) {
-    $daftarBerita = include resource_path('views/pages/berita-data.php');
+// Modul Layanan Surat
+Route::get('/layanan', [LayananSuratController::class, 'index'])->name('layanan');
 
-    if (!isset($daftarBerita[$id])) {
-        abort(404);
-    }
+// Modul Galeri
+Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri');
 
-    return view('pages.berita-detail', ['berita' => $daftarBerita[$id]]);
-})->name('berita.detail');
-
-Route::get('/layanan', function () {
-    return view('pages.layanan-surat');
-})->name('layanan');
-
-Route::get('/galeri', function () {
-    return view('pages.galeri');
-})->name('galeri');
-
-Route::get('/kontak', function () {
-    return view('pages.kontak');
-})->name('kontak');
+// Modul Kontak & Pengaduan Warga
+Route::get('/kontak', [KontakController::class, 'index'])->name('kontak');
+Route::post('/kontak/pengaduan', [KontakController::class, 'store'])->name('kontak.store');

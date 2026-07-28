@@ -32,6 +32,6 @@
     </div>
   </div>
   <p class="text-center text-xs text-white/40 mt-12">
-    © {{ date('Y') }} Pemerintah Desa Kedungdowo — Dibangun oleh Tim KKN Desa Wedoro
+    © {{ date('Y') }} Pemerintah Desa Kedungdowo — KKN 32 KedungDowo
   </p>
 </footer>
