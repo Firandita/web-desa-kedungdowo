@@ -23,8 +23,18 @@ Route::get('/transparansi', function () {
 })->name('transparansi');
 
 Route::get('/berita', function () {
-    return view('pages.beranda'); // sementara
+    return view('pages.berita');
 })->name('berita');
+
+Route::get('/berita/{id}', function ($id) {
+    $daftarBerita = include resource_path('views/pages/berita-data.php');
+
+    if (!isset($daftarBerita[$id])) {
+        abort(404);
+    }
+
+    return view('pages.berita-detail', ['berita' => $daftarBerita[$id]]);
+})->name('berita.detail');
 
 Route::get('/layanan', function () {
     return view('pages.layanan-surat');

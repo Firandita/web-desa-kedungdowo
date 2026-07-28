@@ -17,50 +17,58 @@
         <!-- ALUR PENGAJUAN SURAT -->
         <!-- ========================================================================= -->
         <div class="space-y-6">
-            <h2 class="font-display font-bold text-2xl text-[var(--sawah-dark)] border-l-4 border-[var(--panen)] pl-3">
+            <h2 class="font-display font-bold text-2xl text-[var(--sawah-dark)] border-l-4 border-[var(--panen)] pl-3" data-aos="fade-up">
                 Alur Pengajuan Surat
             </h2>
-            
+
             <div class="grid md:grid-cols-4 gap-6 relative">
+
+                <!-- Panah penghubung antar step (desktop saja) -->
+                <div class="hidden md:flex absolute top-6 left-0 w-full items-center justify-between px-[12.5%] pointer-events-none z-0">
+                    <span class="material-symbols-outlined text-[var(--sawah)]/25 text-2xl">arrow_forward</span>
+                    <span class="material-symbols-outlined text-[var(--sawah)]/25 text-2xl">arrow_forward</span>
+                    <span class="material-symbols-outlined text-[var(--sawah)]/25 text-2xl">arrow_forward</span>
+                </div>
+
                 <!-- Langkah 1 -->
-                <div class="bg-white p-6 rounded-2xl border border-[var(--sawah)]/10 shadow-sm space-y-3 relative">
+                <div class="bg-white p-6 rounded-2xl border border-[var(--sawah)]/10 shadow-sm card-hover space-y-3 relative z-10" data-aos="fade-up" data-aos-delay="0">
                     <div class="w-12 h-12 bg-[var(--sawah)]/10 text-[var(--sawah-dark)] rounded-xl flex items-center justify-center font-black text-xl">
-                        1
+                        <span class="material-symbols-outlined text-2xl">draft</span>
                     </div>
-                    <h3 class="font-bold text-[var(--teks)] text-lg">Siapkan Berkas</h3>
+                    <h3 class="font-bold text-[var(--teks)] text-lg">1. Siapkan Berkas</h3>
                     <p class="text-sm text-[var(--teks)]/70 leading-relaxed">
                         Unduh template surat yang dibutuhkan, isi data secara lengkap, dan siapkan dokumen persyaratan (KK/KTP).
                     </p>
                 </div>
 
                 <!-- Langkah 2 -->
-                <div class="bg-white p-6 rounded-2xl border border-[var(--sawah)]/10 shadow-sm space-y-3 relative">
+                <div class="bg-white p-6 rounded-2xl border border-[var(--sawah)]/10 shadow-sm card-hover space-y-3 relative z-10" data-aos="fade-up" data-aos-delay="100">
                     <div class="w-12 h-12 bg-[var(--sawah)]/10 text-[var(--sawah-dark)] rounded-xl flex items-center justify-center font-black text-xl">
-                        2
+                        <span class="material-symbols-outlined text-2xl">how_to_reg</span>
                     </div>
-                    <h3 class="font-bold text-[var(--teks)] text-lg">Persetujuan RT/RW</h3>
+                    <h3 class="font-bold text-[var(--teks)] text-lg">2. Persetujuan RT/RW</h3>
                     <p class="text-sm text-[var(--teks)]/70 leading-relaxed">
                         Bawa dokumen ke Ketua RT dan RW setempat untuk mendapatkan tanda tangan serta cap pengantar lingkungan.
                     </p>
                 </div>
 
                 <!-- Langkah 3 -->
-                <div class="bg-white p-6 rounded-2xl border border-[var(--sawah)]/10 shadow-sm space-y-3 relative">
+                <div class="bg-white p-6 rounded-2xl border border-[var(--sawah)]/10 shadow-sm card-hover space-y-3 relative z-10" data-aos="fade-up" data-aos-delay="200">
                     <div class="w-12 h-12 bg-[var(--sawah)]/10 text-[var(--sawah-dark)] rounded-xl flex items-center justify-center font-black text-xl">
-                        3
+                        <span class="material-symbols-outlined text-2xl">domain</span>
                     </div>
-                    <h3 class="font-bold text-[var(--teks)] text-lg">Datang ke Balai Desa</h3>
+                    <h3 class="font-bold text-[var(--teks)] text-lg">3. Datang ke Balai Desa</h3>
                     <p class="text-sm text-[var(--teks)]/70 leading-relaxed">
                         Serahkan seluruh berkas ke petugas pelayanan di Balai Desa Kedungdowo pada jam kerja operasional.
                     </p>
                 </div>
 
                 <!-- Langkah 4 -->
-                <div class="bg-white p-6 rounded-2xl border border-[var(--sawah)]/10 shadow-sm space-y-3 relative">
+                <div class="bg-white p-6 rounded-2xl border border-[var(--sawah)]/10 shadow-sm card-hover space-y-3 relative z-10" data-aos="fade-up" data-aos-delay="300">
                     <div class="w-12 h-12 bg-[var(--panen)]/20 text-[var(--panen)] rounded-xl flex items-center justify-center font-black text-xl">
-                        4
+                        <span class="material-symbols-outlined text-2xl">task_alt</span>
                     </div>
-                    <h3 class="font-bold text-[var(--teks)] text-lg">Verifikasi & Selesai</h3>
+                    <h3 class="font-bold text-[var(--teks)] text-lg">4. Verifikasi & Selesai</h3>
                     <p class="text-sm text-[var(--teks)]/70 leading-relaxed">
                         Petugas memverifikasi data dan mencetak surat resmi. Surat siap ditandatangani Kepala Desa/Perangkat Desa.
                     </p>
@@ -74,7 +82,7 @@
         <div class="grid lg:grid-cols-12 gap-8">
             
             <!-- Dokumen Wajib -->
-            <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-[var(--sawah)]/10 shadow-sm space-y-4">
+            <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-[var(--sawah)]/10 shadow-sm card-hover space-y-4" data-aos="fade-up">
                 <h3 class="font-display font-bold text-xl text-[var(--sawah-dark)] flex items-center gap-2">
                     <span class="material-symbols-outlined text-[var(--panen)]">work</span> Berkas Persyaratan Utama
                 </h3>
@@ -109,7 +117,7 @@
             </div>
 
             <!-- Jam Operasional Kerja -->
-            <div class="lg:col-span-5 bg-white p-6 rounded-2xl border border-[var(--sawah)]/10 shadow-sm flex flex-col justify-between">
+            <div class="lg:col-span-5 bg-white p-6 rounded-2xl border border-[var(--sawah)]/10 shadow-sm card-hover flex flex-col justify-between" data-aos="fade-up" data-aos-delay="100">
                 <div>
                     <h3 class="font-display font-bold text-xl text-[var(--sawah-dark)] mb-3 flex items-center gap-2">
                         <span class="material-symbols-outlined text-[var(--sawah-dark)]">schedule</span> Jam Pelayanan Balai Desa
@@ -149,7 +157,7 @@
             
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
                 <!-- Surat 1 -->
-                <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm flex flex-col justify-between gap-4">
+                <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm card-hover flex flex-col justify-between gap-4" data-aos="fade-up" data-aos-delay="0">
                     <div class="flex items-start gap-3">
                         <span class="material-symbols-outlined text-3xl text-[var(--sawah-dark)] p-2 bg-[var(--sawah)]/10 rounded-lg">description</span>
                         <div>
@@ -168,7 +176,7 @@
                 </div>
 
                 <!-- Surat 2 -->
-                <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm flex flex-col justify-between gap-4">
+                <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm card-hover flex flex-col justify-between gap-4" data-aos="fade-up" data-aos-delay="75">
                     <div class="flex items-start gap-3">
                         <span class="material-symbols-outlined text-3xl text-[var(--sawah-dark)] p-2 bg-[var(--sawah)]/10 rounded-lg">description</span>
                         <div>
@@ -187,7 +195,7 @@
                 </div>
 
                 <!-- Surat 3 -->
-                <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm flex flex-col justify-between gap-4">
+                <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm card-hover flex flex-col justify-between gap-4" data-aos="fade-up" data-aos-delay="150">
                     <div class="flex items-start gap-3">
                         <span class="material-symbols-outlined text-3xl text-[var(--sawah-dark)] p-2 bg-[var(--sawah)]/10 rounded-lg">description</span>
                         <div>
@@ -206,7 +214,7 @@
                 </div>
 
                 <!-- Surat 4 -->
-                <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm flex flex-col justify-between gap-4">
+                <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm card-hover flex flex-col justify-between gap-4" data-aos="fade-up" data-aos-delay="225">
                     <div class="flex items-start gap-3">
                         <span class="material-symbols-outlined text-3xl text-[var(--sawah-dark)] p-2 bg-[var(--sawah)]/10 rounded-lg">description</span>
                         <div>
@@ -225,7 +233,7 @@
                 </div>
 
                 <!-- Surat 5 -->
-                <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm flex flex-col justify-between gap-4">
+                <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm card-hover flex flex-col justify-between gap-4" data-aos="fade-up" data-aos-delay="300">
                     <div class="flex items-start gap-3">
                         <span class="material-symbols-outlined text-3xl text-[var(--sawah-dark)] p-2 bg-[var(--sawah)]/10 rounded-lg">description</span>
                         <div>
@@ -244,7 +252,7 @@
                 </div>
 
                 <!-- Surat 6 -->
-                <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm flex flex-col justify-between gap-4">
+                <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm card-hover flex flex-col justify-between gap-4" data-aos="fade-up" data-aos-delay="375">
                     <div class="flex items-start gap-3">
                         <span class="material-symbols-outlined text-3xl text-[var(--sawah-dark)] p-2 bg-[var(--sawah)]/10 rounded-lg">description</span>
                         <div>
@@ -260,6 +268,55 @@
                             <span class="material-symbols-outlined text-sm">download</span> Unduh
                         </a>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pembatas section -->
+        <div class="terasering"></div>
+
+        <!-- ========================================================================= -->
+        <!-- PENGADUAN MASYARAKAT -->
+        <!-- ========================================================================= -->
+        <div class="relative overflow-hidden bg-[var(--sawah-dark)] rounded-3xl px-6 py-10 md:px-12 md:py-12" data-aos="fade-up">
+
+            {{-- aksen bulat samar, senada dengan hero/page-header --}}
+            <div class="absolute -top-16 -right-10 w-56 h-56 rounded-full bg-[var(--panen)]/15 blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-20 -left-10 w-56 h-56 rounded-full bg-[var(--sawah)]/30 blur-3xl pointer-events-none"></div>
+
+            <div class="relative grid md:grid-cols-12 gap-8 items-center">
+
+                <div class="md:col-span-7 space-y-3">
+                    <span class="inline-flex items-center gap-1.5 text-[var(--panen)] text-xs font-bold uppercase tracking-widest">
+                        <span class="material-symbols-outlined text-sm">support_agent</span>
+                        Pengaduan Masyarakat
+                    </span>
+                    <h3 class="font-display font-bold text-xl md:text-2xl text-white leading-snug">
+                        Ada kendala pelayanan atau ingin menyampaikan aduan?
+                    </h3>
+                    <p class="text-sm text-white/70 leading-relaxed max-w-lg">
+                        Warga dapat langsung menghubungi petugas pelayanan Desa Kedungdowo melalui WhatsApp atau telepon di jam kerja. Pengaduan akan ditindaklanjuti oleh perangkat desa yang berwenang.
+                    </p>
+                </div>
+
+                <div class="md:col-span-5 flex flex-col sm:flex-row md:flex-col gap-3">
+                    <a href="https://wa.me/6281234567890?text=Assalamualaikum%2C%20saya%20ingin%20menyampaikan%20pengaduan%20terkait%20pelayanan%20Desa%20Kedungdowo."
+                       target="_blank" rel="noopener"
+                       class="flex items-center gap-3 bg-[var(--panen)] hover:bg-[var(--panen-soft)] text-[var(--sawah-dark)] font-bold text-sm px-5 py-3.5 rounded-xl shadow-sm transition-colors">
+                        <span class="material-symbols-outlined">chat</span>
+                        <div class="text-left leading-tight">
+                            <span class="block">WhatsApp Pengaduan</span>
+                            <span class="block text-xs font-medium opacity-80">0812-3456-7890</span>
+                        </div>
+                    </a>
+                    <a href="tel:+622612345678"
+                       class="flex items-center gap-3 bg-white/10 hover:bg-white/15 text-white font-bold text-sm px-5 py-3.5 rounded-xl border border-white/15 transition-colors">
+                        <span class="material-symbols-outlined">call</span>
+                        <div class="text-left leading-tight">
+                            <span class="block">Telepon Kantor Desa</span>
+                            <span class="block text-xs font-medium opacity-70">(0261) 234-5678</span>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
