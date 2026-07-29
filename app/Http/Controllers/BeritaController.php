@@ -37,7 +37,7 @@ class BeritaController extends Controller
         if (!$berita) {
             $daftarBerita = include resource_path('views/pages/berita-data.php');
             if (isset($daftarBerita[$id])) {
-                $berita = (object) $daftarBerita[$id];
+                $berita = $daftarBerita[$id];
             } else {
                 abort(404);
             }

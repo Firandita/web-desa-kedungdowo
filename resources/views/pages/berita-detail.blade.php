@@ -49,13 +49,14 @@
     </span>
     <span class="flex items-center gap-1.5">
       <span class="material-symbols-outlined text-sm">visibility</span>
-      {{ $berita['dilihat'] }}
+      {{ $berita['dilihat'] }} kali
     </span>
   </div>
 
-  {{-- Paragraf isi berita --}}
+  {{-- Paragraf isi berita — deskripsi di database itu 1 teks panjang,
+       dipisah jadi beberapa paragraf berdasarkan baris kosong (\n\n) --}}
   <div class="prose max-w-none text-[var(--teks)]/85 leading-relaxed space-y-5 text-[15px]">
-    @foreach ($berita['konten'] as $paragraf)
+    @foreach (explode("\n\n", $berita['deskripsi']) as $paragraf)
       <p>{{ $paragraf }}</p>
     @endforeach
   </div>

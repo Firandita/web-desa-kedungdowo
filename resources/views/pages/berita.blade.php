@@ -11,15 +11,12 @@
 ])
 
 {{--
-  DATA DUMMY BERITA
-  Diambil dari berita-data.php supaya bisa dipakai bareng halaman detail.
-  NANTI kalau Filament Resource "Berita" sudah jadi, ganti baris di bawah
-  menjadi query database, contoh:
-    $daftarBerita = \App\Models\Berita::latest('tanggal')->take(6)->get();
+  Data berita dikirim dari BeritaController ($daftarBerita) — kalau tabel
+  `beritas` di database ada isinya, ini data ASLI dari database. Kalau
+  masih kosong, controller otomatis fallback ke berita-data.php (dummy).
+  JANGAN override $daftarBerita di sini, biar data asli kepakai begitu
+  admin mulai nambah berita lewat panel /admin.
 --}}
-@php
-  $daftarBerita = include resource_path('views/pages/berita-data.php');
-@endphp
 
 {{--
   CATATAN: modal preview di bawah pakai VANILLA JS (bukan Alpine.js),
@@ -39,7 +36,7 @@
                'title'    => $berita['judul'],
                'date'     => $berita['tanggal'],
                'author'   => $berita['penulis'],
-               'views'    => $berita['dilihat'],
+               'views'    => $berita['dilihat'] . ' kali',
                'kategori' => $berita['kategori'],
                'image'    => asset('img/' . $berita['foto']),
                'excerpt'  => $berita['ringkasan'],
@@ -64,13 +61,13 @@
             {{ $berita['judul'] }}
           </h3>
           <p class="text-xs text-[var(--teks)]/70 line-clamp-3 mb-4 leading-relaxed">
-            {{ $berita['ringkasan_singkat'] }}
+            {{ $berita['ringkasan'] }}
           </p>
         </div>
         <div class="pt-3 border-t border-[var(--sawah)]/10 flex items-center justify-between">
           <div class="flex items-center gap-1 text-[11px] text-[var(--teks)]/60">
             <span class="material-symbols-outlined text-sm">visibility</span>
-            {{ $berita['dilihat'] }}
+            {{ $berita['dilihat'] }} kali
           </div>
           <div class="bg-[var(--sawah)] text-white text-[11px] font-bold px-2.5 py-1 rounded-lg flex items-center gap-1 shadow-sm shrink-0">
             <span class="material-symbols-outlined text-xs">calendar_today</span>

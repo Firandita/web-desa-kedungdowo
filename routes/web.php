@@ -26,16 +26,16 @@ Route::get('/transparansi', function () {
     return view('pages.infografis');
 })->name('transparansi');
 
-// Modul Berita
+// Modul Berita (Fahmi)
 Route::get('/berita', [BeritaController::class, 'index'])->name('berita');
 Route::get('/berita/{id}', [BeritaController::class, 'show'])->name('berita.detail');
 
-// Modul Layanan Surat
+// Modul Layanan Surat (Fahmi)
 Route::get('/layanan', [LayananSuratController::class, 'index'])->name('layanan');
 
-// Modul Galeri
+// Modul Galeri (Fahmi)
 Route::get('/galeri', [GaleriController::class, 'index'])->name('galeri');
 
-// Modul Kontak & Pengaduan Warga
+// Modul Kontak & Pengaduan Warga (Fahmi)
 Route::get('/kontak', [KontakController::class, 'index'])->name('kontak');
 Route::post('/kontak/pengaduan', [KontakController::class, 'store'])->name('kontak.store');
