@@ -88,48 +88,35 @@
       sehingga tiap pemilik usaha bisa didaftarkan dengan mudah.
     </p>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-      {{-- Ulangi blok card ini untuk tiap UMKM --}}
-      <div class="rounded-xl border border-[var(--sawah)]/15 p-5 card-hover" data-aos="fade-up" data-aos-delay="0">
-        <p class="font-display font-bold text-[var(--sawah-dark)] text-sm">[Nama Usaha]</p>
-        <p class="text-xs text-[var(--tanah)] mt-1">Kategori: [Kuliner / Kerajinan / Pertanian]</p>
-        <p class="text-xs text-[var(--teks)]/60 mt-2">Pemilik: [Nama Pemilik] · Dusun [___]</p>
-        <p class="text-xs text-[var(--teks)]/60">Kontak: [No. WA]</p>
+    @if ($umkmList->isEmpty())
+      {{-- Belum ada UMKM yang didaftarkan lewat admin panel --}}
+      <div class="rounded-2xl border border-dashed border-[var(--sawah)]/25 py-14 px-6 text-center">
+        <span class="material-symbols-outlined text-5xl text-[var(--sawah)]/30">storefront</span>
+        <p class="font-section font-bold text-[var(--sawah-dark)] mt-3">Belum ada UMKM terdaftar</p>
+        <p class="text-sm text-[var(--teks)]/60 mt-1 max-w-md mx-auto">Data akan muncul di sini begitu perangkat desa mendaftarkan usaha warga lewat panel admin.</p>
       </div>
-      <div class="rounded-xl border border-[var(--sawah)]/15 p-5 card-hover" data-aos="fade-up" data-aos-delay="60">
-        <p class="font-display font-bold text-[var(--sawah-dark)] text-sm">[Nama Usaha]</p>
-        <p class="text-xs text-[var(--tanah)] mt-1">Kategori: [___]</p>
-        <p class="text-xs text-[var(--teks)]/60 mt-2">Pemilik: [Nama Pemilik] · Dusun [___]</p>
-        <p class="text-xs text-[var(--teks)]/60">Kontak: [No. WA]</p>
+    @else
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        @foreach ($umkmList as $umkm)
+        <div class="rounded-xl overflow-hidden border border-[var(--sawah)]/15 card-hover" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 6) * 60 }}">
+          {{-- Foto UMKM: hasil upload admin (storage) atau img-slot kalau belum ada foto --}}
+          @if ($umkm->foto)
+            <img src="{{ asset('storage/' . $umkm->foto) }}" alt="{{ $umkm->nama_usaha }}" class="h-32 w-full object-cover">
+          @else
+            <div class="h-32 w-full img-slot"></div>
+          @endif
+          <div class="p-5">
+            <p class="font-display font-bold text-[var(--sawah-dark)] text-sm">{{ $umkm->nama_usaha }}</p>
+            <p class="text-xs text-[var(--tanah)] mt-1">Kategori: {{ $umkm->kategori ?? '-' }}</p>
+            <p class="text-xs text-[var(--teks)]/60 mt-2">Pemilik: {{ $umkm->nama_pemilik }} @if($umkm->dusun) · Dusun {{ $umkm->dusun }} @endif</p>
+            @if ($umkm->kontak)
+              <p class="text-xs text-[var(--teks)]/60">Kontak: {{ $umkm->kontak }}</p>
+            @endif
+          </div>
+        </div>
+        @endforeach
       </div>
-      <div class="rounded-xl border border-[var(--sawah)]/15 p-5 card-hover" data-aos="fade-up" data-aos-delay="120">
-        <p class="font-display font-bold text-[var(--sawah-dark)] text-sm">[Nama Usaha]</p>
-        <p class="text-xs text-[var(--tanah)] mt-1">Kategori: [___]</p>
-        <p class="text-xs text-[var(--teks)]/60 mt-2">Pemilik: [Nama Pemilik] · Dusun [___]</p>
-        <p class="text-xs text-[var(--teks)]/60">Kontak: [No. WA]</p>
-      </div>
-      <div class="rounded-xl border border-[var(--sawah)]/15 p-5 card-hover" data-aos="fade-up" data-aos-delay="180">
-        <p class="font-display font-bold text-[var(--sawah-dark)] text-sm">[Nama Usaha]</p>
-        <p class="text-xs text-[var(--tanah)] mt-1">Kategori: [___]</p>
-        <p class="text-xs text-[var(--teks)]/60 mt-2">Pemilik: [Nama Pemilik] · Dusun [___]</p>
-        <p class="text-xs text-[var(--teks)]/60">Kontak: [No. WA]</p>
-      </div>
-      <div class="rounded-xl border border-[var(--sawah)]/15 p-5 card-hover" data-aos="fade-up" data-aos-delay="240">
-        <p class="font-display font-bold text-[var(--sawah-dark)] text-sm">[Nama Usaha]</p>
-        <p class="text-xs text-[var(--tanah)] mt-1">Kategori: [___]</p>
-        <p class="text-xs text-[var(--teks)]/60 mt-2">Pemilik: [Nama Pemilik] · Dusun [___]</p>
-        <p class="text-xs text-[var(--teks)]/60">Kontak: [No. WA]</p>
-      </div>
-      <div class="rounded-xl border border-[var(--sawah)]/15 p-5 card-hover" data-aos="fade-up" data-aos-delay="300">
-        <p class="font-display font-bold text-[var(--sawah-dark)] text-sm">[Nama Usaha]</p>
-        <p class="text-xs text-[var(--tanah)] mt-1">Kategori: [___]</p>
-        <p class="text-xs text-[var(--teks)]/60 mt-2">Pemilik: [Nama Pemilik] · Dusun [___]</p>
-        <p class="text-xs text-[var(--teks)]/60">Kontak: [No. WA]</p>
-      </div>
-    </div>
-    <p class="text-xs text-[var(--teks)]/50 mt-6 text-center">
-      *6 kartu ini contoh kosong. Isi nama & jumlah UMKM sebenarnya dari hasil pendataan warga.
-    </p>
+    @endif
   </div>
 </section>
 

@@ -5,6 +5,8 @@ use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\LayananSuratController;
 use App\Http\Controllers\KontakController;
+use App\Http\Controllers\UmkmController;
+use App\Http\Controllers\ApbdesController;
 
 Route::get('/', function () {
     return view('pages.beranda');
@@ -18,13 +20,9 @@ Route::get('/pemerintahan', function () {
     return view('pages.pemerintahan');
 })->name('pemerintahan');
 
-Route::get('/potensi', function () {
-    return view('pages.potensi');
-})->name('potensi');
+Route::get('/potensi', [UmkmController::class, 'index'])->name('potensi');
 
-Route::get('/transparansi', function () {
-    return view('pages.infografis');
-})->name('transparansi');
+Route::get('/transparansi', [ApbdesController::class, 'index'])->name('transparansi');
 
 // Modul Berita (Fahmi)
 Route::get('/berita', [BeritaController::class, 'index'])->name('berita');

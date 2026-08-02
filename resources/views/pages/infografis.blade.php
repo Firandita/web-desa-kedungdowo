@@ -420,11 +420,62 @@
         </div>
         {{-- /tab-penduduk --}}
 
+        {{-- ========================================================================= --}}
+        {{-- TAB APBDDES — data asli dari database (Model Apbdes + RealisasiBidang) --}}
+        {{-- ========================================================================= --}}
+        <div id="tab-apbddes" class="infografis-panel hidden space-y-8">
+          @if (!$apbdes)
+            <div class="bg-white rounded-2xl border border-[var(--sawah)]/10 shadow-sm py-16 px-6 text-center">
+                <span class="material-symbols-outlined text-5xl text-[var(--sawah)]/30">payments</span>
+                <p class="font-section font-bold text-[var(--sawah-dark)] mt-3">APBDDes</p>
+                <p class="text-sm text-[var(--teks)]/60 mt-1 max-w-md mx-auto">Data belum tersedia — akan ditampilkan begitu perangkat desa menginput data resminya lewat admin panel.</p>
+            </div>
+          @else
+            <div>
+              <h3 class="font-display font-bold text-xl text-[var(--sawah-dark)]">Anggaran Pendapatan & Belanja Desa {{ $apbdes->tahun }}</h3>
+              <div class="grid sm:grid-cols-2 gap-5 mt-4">
+                <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm card-hover">
+                  <p class="text-sm font-bold text-[var(--teks)]/55">Total Pendapatan</p>
+                  <p class="text-2xl font-black text-[var(--sawah-dark)] mt-1">Rp {{ number_format($apbdes->pendapatan, 0, ',', '.') }}</p>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-[var(--sawah)]/10 shadow-sm card-hover">
+                  <p class="text-sm font-bold text-[var(--teks)]/55">Total Belanja</p>
+                  <p class="text-2xl font-black text-[var(--tanah)] mt-1">Rp {{ number_format($apbdes->belanja, 0, ',', '.') }}</p>
+                </div>
+              </div>
+              @if ($apbdes->dokumen_pdf)
+                <a href="{{ asset('storage/' . $apbdes->dokumen_pdf) }}" target="_blank" class="btn-outline mt-4 inline-flex">
+                  <span class="material-symbols-outlined text-base">description</span> Unduh Dokumen Resmi (PDF)
+                </a>
+              @endif
+            </div>
+
+            @if ($apbdes->realisasiBidang->isNotEmpty())
+            <div>
+              <h3 class="font-display font-bold text-xl text-[var(--sawah-dark)] mb-4">Realisasi Anggaran per Bidang</h3>
+              <div class="space-y-4">
+                @foreach ($apbdes->realisasiBidang as $bidang)
+                <div class="bg-white p-4 rounded-xl border border-[var(--sawah)]/10 shadow-sm">
+                  <div class="flex items-center justify-between text-sm mb-1.5">
+                    <p class="font-bold text-[var(--teks)]/85">{{ $bidang->bidang }}</p>
+                    <p class="text-[var(--teks)]/60">Rp {{ number_format($bidang->alokasi, 0, ',', '.') }}</p>
+                  </div>
+                  <div class="h-2.5 w-full bg-[var(--sawah)]/10 rounded-full overflow-hidden">
+                    <div class="h-full bg-[var(--panen)] rounded-full" style="width: {{ min(100, $bidang->realisasi_persen) }}%"></div>
+                  </div>
+                  <p class="text-xs text-[var(--teks)]/55 mt-1">Realisasi {{ $bidang->realisasi_persen }}%</p>
+                </div>
+                @endforeach
+              </div>
+            </div>
+            @endif
+          @endif
+        </div>
+
         {{-- Panel buat tab yang datanya belum disiapkan Bendahara/Kaur — bukan error,
              cuma nunggu data resmi. Ganti isi @foreach section ini kapan pun datanya
              udah ada, pola card-nya bisa dicontek dari tab-penduduk di atas. --}}
         @foreach ([
-            'apbddes' => ['icon' => 'payments', 'label' => 'APBDDes'],
             'stunting' => ['icon' => 'trending_up', 'label' => 'Data Stunting'],
             'bansos' => ['icon' => 'inventory_2', 'label' => 'Penyaluran Bansos'],
             'idm' => ['icon' => 'emoji_events', 'label' => 'Indeks Desa Membangun (IDM)'],
