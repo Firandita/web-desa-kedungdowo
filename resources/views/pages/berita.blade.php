@@ -17,6 +17,15 @@
   JANGAN override $daftarBerita di sini, biar data asli kepakai begitu
   admin mulai nambah berita lewat panel /admin.
 --}}
+@php
+  // Kalau $fromDb = false, foto pakai konvensi asset('img/...') + img-slot.
+  // Kalau $fromDb = true, foto asli hasil upload Filament -> asset('storage/...').
+  $buildFotoUrl = function ($item) use ($fromDb) {
+      return $fromDb
+          ? asset('storage/' . $item->foto)
+          : asset('img/' . $item->foto);
+  };
+@endphp
 
 {{--
   CATATAN: modal preview di bawah pakai VANILLA JS (bukan Alpine.js),
@@ -33,45 +42,45 @@
     {{-- Card Berita --}}
     <article class="bg-white rounded-2xl border border-[var(--sawah)]/15 overflow-hidden shadow-sm card-hover flex flex-col h-full group cursor-pointer"
              onclick="openBeritaModal({{ Illuminate\Support\Js::from([
-               'title'    => $berita['judul'],
-               'date'     => $berita['tanggal'],
-               'author'   => $berita['penulis'],
-               'views'    => $berita['dilihat'] . ' kali',
-               'kategori' => $berita['kategori'],
-               'image'    => asset('img/' . $berita['foto']),
-               'excerpt'  => $berita['ringkasan'],
-               'link'     => route('berita.detail', $berita['id']),
+               'title'    => $berita->judul,
+               'date'     => \Illuminate\Support\Carbon::parse($berita->tanggal)->translatedFormat('d M Y'),
+               'author'   => $berita->penulis,
+               'views'    => $berita->dilihat . ' kali',
+               'kategori' => $berita->kategori,
+               'image'    => $buildFotoUrl($berita),
+               'excerpt'  => $berita->ringkasan,
+               'link'     => route('berita.detail', $berita->id),
              ]) }})">
 
       {{-- Gambar Seragam (Aspect Video) --}}
       <div class="relative w-full aspect-video overflow-hidden bg-slate-100 shrink-0">
-        {{-- GANTI: Foto berita "{{ $berita['judul'] }}" -> public/img/{{ $berita['foto'] }} --}}
-        <img src="{{ asset('img/' . $berita['foto']) }}"
-             alt="{{ $berita['judul'] }}"
+        {{-- GANTI: Foto berita "{{ $berita->judul }}" -> public/img/{{ $berita->foto }} --}}
+        <img src="{{ $buildFotoUrl($berita) }}"
+             alt="{{ $berita->judul }}"
              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 img-slot"
              onerror="this.classList.add('img-slot')">
         <span class="absolute top-3 left-3 bg-[var(--panen)] text-[var(--sawah-dark)] text-[10px] font-bold uppercase tracking-wide px-2.5 py-1 rounded-full shadow-sm">
-          {{ $berita['kategori'] }}
+          {{ $berita->kategori }}
         </span>
       </div>
 
       <div class="p-5 flex flex-col flex-1 justify-between">
         <div>
           <h3 class="font-display font-bold text-base text-[var(--sawah-dark)] line-clamp-2 mb-2 group-hover:text-[var(--sawah)] transition-colors">
-            {{ $berita['judul'] }}
+            {{ $berita->judul }}
           </h3>
           <p class="text-xs text-[var(--teks)]/70 line-clamp-3 mb-4 leading-relaxed">
-            {{ $berita['ringkasan'] }}
+            {{ $berita->ringkasan_singkat }}
           </p>
         </div>
         <div class="pt-3 border-t border-[var(--sawah)]/10 flex items-center justify-between">
           <div class="flex items-center gap-1 text-[11px] text-[var(--teks)]/60">
             <span class="material-symbols-outlined text-sm">visibility</span>
-            {{ $berita['dilihat'] }} kali
+            {{ $berita->dilihat }} kali
           </div>
           <div class="bg-[var(--sawah)] text-white text-[11px] font-bold px-2.5 py-1 rounded-lg flex items-center gap-1 shadow-sm shrink-0">
             <span class="material-symbols-outlined text-xs">calendar_today</span>
-            {{ $berita['tanggal'] }}
+            {{ \Illuminate\Support\Carbon::parse($berita->tanggal)->translatedFormat('d M Y') }}
           </div>
         </div>
       </div>

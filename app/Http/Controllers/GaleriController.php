@@ -17,6 +17,17 @@ class GaleriController extends Controller
 
         $galeriList = $query->latest('tanggal')->get();
 
-        return view('pages.galeri', ['galeriList' => $galeriList]);
+        // Fallback ke data dummy kalau database masih kosong
+        if ($galeriList->isEmpty()) {
+            $galeriList = collect(include resource_path('views/pages/galeri-data.php'));
+            $fromDb = false;
+        } else {
+            $fromDb = true;
+        }
+
+        return view('pages.galeri', [
+            'galeriList' => $galeriList,
+            'fromDb' => $fromDb,
+        ]);
     }
 }

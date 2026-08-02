@@ -19,33 +19,46 @@ class BeritaController extends Controller
             $query->where('judul', 'like', '%' . $request->q . '%');
         }
 
-        $beritaList = $query->latest('tanggal')->get();
+        $daftarBerita = $query->latest('tanggal')->get();
 
-        // Fallback jika database masih kosong
-        if ($beritaList->isEmpty()) {
-            $daftarBerita = include resource_path('views/pages/berita-data.php');
-            return view('pages.berita', ['daftarBerita' => $daftarBerita]);
+        // Fallback ke data dummy kalau database masih kosong.
+        // Item dummy berupa object supaya cara akses ($item->judul) sama
+        // persis dengan model Eloquent Berita, jadi blade tidak perlu tahu
+        // datanya dari database atau dummy.
+        if ($daftarBerita->isEmpty()) {
+            $daftarBerita = collect(include resource_path('views/pages/berita-data.php'));
+            $fromDb = false;
+        } else {
+            $fromDb = true;
         }
 
-        return view('pages.berita', ['daftarBerita' => $beritaList]);
+        return view('pages.berita', [
+            'daftarBerita' => $daftarBerita,
+            'fromDb' => $fromDb,
+        ]);
     }
 
     public function show($id)
     {
         $berita = Berita::find($id);
 
-        if (!$berita) {
+        if ($berita) {
+            $berita->increment('dilihat');
+            $fromDb = true;
+        } else {
             $daftarBerita = include resource_path('views/pages/berita-data.php');
-            if (isset($daftarBerita[$id])) {
-                $berita = $daftarBerita[$id];
-            } else {
+
+            if (!isset($daftarBerita[$id])) {
                 abort(404);
             }
-        } else {
-            // Increment jumlah pembaca
-            $berita->increment('dilihat');
+
+            $berita = $daftarBerita[$id];
+            $fromDb = false;
         }
 
-        return view('pages.berita-detail', ['berita' => $berita]);
+        return view('pages.berita-detail', [
+            'berita' => $berita,
+            'fromDb' => $fromDb,
+        ]);
     }
 }

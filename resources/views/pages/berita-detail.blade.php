@@ -1,19 +1,26 @@
 @extends('layouts.app')
 
-@section('title', $berita['judul'] . ' - Berita Desa')
+@section('title', $berita->judul . ' - Berita Desa')
 
 @section('content')
 
 @php
-  // NANTI ganti jadi: $berita = \App\Models\Berita::findOrFail($id);
-  // (variabel $berita sudah dikirim dari route, lihat routes/web.php)
+    // Kalau $fromDb = false, foto pakai konvensi asset('img/...') + img-slot.
+    // Kalau $fromDb = true, foto asli hasil upload Filament -> asset('storage/...').
+    $fotoUrl = $fromDb ? asset('storage/' . $berita->foto) : asset('img/' . $berita->foto);
+
+    // Pecah deskripsi jadi paragraf berdasarkan baris kosong ganda.
+    $paragraf = array_filter(array_map('trim', explode("\n\n", $berita->deskripsi ?? '')));
+    if (empty($paragraf)) {
+        $paragraf = [$berita->deskripsi ?? ''];
+    }
 @endphp
 
 {{-- Header halaman pakai foto & judul berita sebagai latar --}}
 <section class="relative w-full h-[320px] md:h-[420px] overflow-hidden bg-[var(--sawah-dark)]">
-  {{-- GANTI: Foto header berita "{{ $berita['judul'] }}" -> public/img/{{ $berita['foto'] }} --}}
-  <img src="{{ asset('img/' . $berita['foto']) }}"
-       alt="{{ $berita['judul'] }}"
+  {{-- GANTI: Foto header berita "{{ $berita->judul }}" -> public/img/{{ $berita->foto }} --}}
+  <img src="{{ $fotoUrl }}"
+       alt="{{ $berita->judul }}"
        class="w-full h-full object-cover opacity-60 img-slot"
        onerror="this.classList.add('img-slot')">
   <div class="absolute inset-0 bg-gradient-to-t from-[var(--sawah-dark)] via-[var(--sawah-dark)]/40 to-transparent"></div>
@@ -25,10 +32,10 @@
         Kembali ke Berita
       </a>
       <span class="inline-block bg-[var(--panen)] text-[var(--sawah-dark)] text-[10px] font-bold uppercase tracking-wide px-3 py-1 rounded-full shadow-sm mb-3">
-        {{ $berita['kategori'] }}
+        {{ $berita->kategori }}
       </span>
       <h1 class="font-display font-bold text-2xl md:text-4xl text-white leading-snug max-w-3xl">
-        {{ $berita['judul'] }}
+        {{ $berita->judul }}
       </h1>
     </div>
   </div>
@@ -41,23 +48,23 @@
   <div class="flex flex-wrap items-center gap-4 text-xs text-[var(--teks)]/60 font-medium pb-6 mb-8 border-b border-[var(--sawah)]/10">
     <span class="flex items-center gap-1.5">
       <span class="material-symbols-outlined text-sm">calendar_today</span>
-      {{ $berita['tanggal'] }}
+      {{ \Illuminate\Support\Carbon::parse($berita->tanggal)->translatedFormat('d F Y') }}
     </span>
     <span class="flex items-center gap-1.5">
       <span class="material-symbols-outlined text-sm">person</span>
-      {{ $berita['penulis'] }}
+      {{ $berita->penulis }}
     </span>
     <span class="flex items-center gap-1.5">
       <span class="material-symbols-outlined text-sm">visibility</span>
-      {{ $berita['dilihat'] }} kali
+      {{ $berita->dilihat }} kali
     </span>
   </div>
 
   {{-- Paragraf isi berita — deskripsi di database itu 1 teks panjang,
        dipisah jadi beberapa paragraf berdasarkan baris kosong (\n\n) --}}
   <div class="prose max-w-none text-[var(--teks)]/85 leading-relaxed space-y-5 text-[15px]">
-    @foreach (explode("\n\n", $berita['deskripsi']) as $paragraf)
-      <p>{{ $paragraf }}</p>
+    @foreach ($paragraf as $p)
+      <p>{{ $p }}</p>
     @endforeach
   </div>
 

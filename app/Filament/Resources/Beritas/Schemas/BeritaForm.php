@@ -5,9 +5,11 @@ namespace App\Filament\Resources\Beritas\Schemas;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Str;
 
 class BeritaForm
 {
@@ -15,48 +17,76 @@ class BeritaForm
     {
         return $schema
             ->components([
-                TextInput::make('judul')
-                    ->required()
-                    ->maxLength(255)
-                    ->columnSpanFull(),
+                Section::make('Informasi Berita')
+                    ->columns(2)
+                    ->components([
+                        TextInput::make('judul')
+                            ->label('Judul Berita')
+                            ->required()
+                            ->maxLength(255)
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(fn (string $state, callable $set) => $set('slug', Str::slug($state)))
+                            ->columnSpanFull(),
 
-                Select::make('kategori')
-                    ->options([
-                        'Kegiatan Desa' => 'Kegiatan Desa',
-                        'Pemberdayaan' => 'Pemberdayaan',
-                        'Kesehatan' => 'Kesehatan',
-                        'Lingkungan' => 'Lingkungan',
-                        'Digitalisasi' => 'Digitalisasi',
-                        'Pengumuman' => 'Pengumuman',
-                    ])
-                    ->required(),
+                        TextInput::make('slug')
+                            ->label('Slug (URL)')
+                            ->maxLength(255)
+                            ->helperText('Otomatis terisi dari judul, boleh diubah manual.'),
 
-                DatePicker::make('tanggal')
-                    ->required()
-                    ->default(now()),
+                        TextInput::make('penulis')
+                            ->label('Penulis')
+                            ->default('Humas Pemdes')
+                            ->required()
+                            ->maxLength(255),
 
-                TextInput::make('penulis')
-                    ->default('Humas Pemdes')
-                    ->maxLength(255),
+                        DatePicker::make('tanggal')
+                            ->label('Tanggal Terbit')
+                            ->required()
+                            ->default(now()),
 
-                FileUpload::make('foto')
-                    ->image()
-                    ->directory('berita')
-                    ->maxSize(2048)
-                    ->helperText('Ukuran maksimal 2MB, format JPG/PNG.')
-                    ->columnSpanFull(),
+                        Select::make('kategori')
+                            ->label('Kategori')
+                            ->options([
+                                'Kegiatan' => 'Kegiatan',
+                                'Kegiatan Desa' => 'Kegiatan Desa',
+                                'Pemberdayaan' => 'Pemberdayaan',
+                                'Kesehatan' => 'Kesehatan',
+                                'Lingkungan' => 'Lingkungan',
+                                'Digitalisasi' => 'Digitalisasi',
+                                'Pengumuman' => 'Pengumuman',
+                            ])
+                            ->searchable()
+                            ->required(),
+                    ]),
 
-                Textarea::make('ringkasan')
-                    ->rows(2)
-                    ->maxLength(255)
-                    ->helperText('Ringkasan singkat yang muncul di kartu daftar berita.')
-                    ->columnSpanFull(),
+                Section::make('Konten Berita')
+                    ->components([
+                        Textarea::make('ringkasan')
+                            ->label('Ringkasan Singkat')
+                            ->helperText('Ditampilkan di card daftar berita (2-3 kalimat).')
+                            ->rows(3)
+                            ->maxLength(500)
+                            ->columnSpanFull(),
 
-                Textarea::make('deskripsi')
-                    ->required()
-                    ->rows(8)
-                    ->helperText('Isi lengkap berita. Pisahkan tiap paragraf dengan baris kosong (Enter dua kali).')
-                    ->columnSpanFull(),
+                        Textarea::make('deskripsi')
+                            ->label('Isi Berita Lengkap')
+                            ->required()
+                            ->rows(8)
+                            ->columnSpanFull(),
+                    ]),
+
+                Section::make('Foto Sampul')
+                    ->components([
+                        FileUpload::make('foto')
+                            ->label('Foto Berita')
+                            ->image()
+                            ->imageEditor()
+                            ->directory('berita')
+                            ->disk('public')
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->maxSize(3072)
+                            ->columnSpanFull(),
+                    ]),
             ]);
     }
 }
