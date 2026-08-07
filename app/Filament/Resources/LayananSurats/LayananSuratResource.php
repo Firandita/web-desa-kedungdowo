@@ -18,7 +18,15 @@ class LayananSuratResource extends Resource
 {
     protected static ?string $model = LayananSurat::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $navigationLabel = 'Layanan Surat';
+
+    protected static ?string $modelLabel = 'Layanan Surat';
+
+    protected static ?string $pluralModelLabel = 'Layanan Surat';
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentDuplicate;
+
+    protected static ?int $navigationSort = 3;
 
     public static function form(Schema $schema): Schema
     {

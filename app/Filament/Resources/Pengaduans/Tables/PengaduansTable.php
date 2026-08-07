@@ -19,22 +19,37 @@ class PengaduansTable
                 TextColumn::make('nomor_tiket')
                     ->label('No. Tiket')
                     ->searchable()
-                    ->copyable(),
+                    ->sortable()
+                    ->weight('bold')
+                    ->icon('heroicon-o-ticket')
+                    ->copyable()
+                    ->copyMessage('Nomor tiket berhasil disalin!'),
 
                 TextColumn::make('nama_pelapor')
-                    ->label('Pelapor')
-                    ->searchable(),
+                    ->label('Nama Pelapor')
+                    ->searchable()
+                    ->sortable()
+                    ->formatStateUsing(fn ($record) => $record->is_anonim ? '🔒 Anonim (' . $record->nama_pelapor . ')' : $record->nama_pelapor),
 
                 TextColumn::make('tipe_laporan')
-                    ->label('Tipe')
-                    ->badge(),
+                    ->label('Tipe Laporan')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pengaduan' => 'danger',
+                        'aspirasi' => 'info',
+                        'pertanyaan' => 'primary',
+                        default => 'gray',
+                    })
+                    ->formatStateUsing(fn (string $state): string => ucfirst($state)),
 
                 TextColumn::make('kategori')
                     ->label('Kategori')
+                    ->badge()
+                    ->color('gray')
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('status')
-                    ->label('Status')
+                    ->label('Status Penanganan')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'pending' => 'warning',
@@ -42,7 +57,22 @@ class PengaduansTable
                         'selesai' => 'success',
                         'ditolak' => 'danger',
                         default => 'gray',
-                    }),
+                    })
+                    ->icon(fn (string $state): string => match ($state) {
+                        'pending' => 'heroicon-o-clock',
+                        'proses' => 'heroicon-o-arrow-path',
+                        'selesai' => 'heroicon-o-check-circle',
+                        'ditolak' => 'heroicon-o-x-circle',
+                        default => 'heroicon-o-question-mark-circle',
+                    })
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'pending' => 'Menunggu',
+                        'proses' => 'Diproses',
+                        'selesai' => 'Selesai',
+                        'ditolak' => 'Ditolak',
+                        default => ucfirst($state),
+                    })
+                    ->sortable(),
 
                 TextColumn::make('created_at')
                     ->label('Tanggal Masuk')

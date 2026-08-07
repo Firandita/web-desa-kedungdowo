@@ -30,9 +30,10 @@ Route::get('/potensi', [UmkmController::class, 'index'])->name('potensi');
 
 Route::get('/transparansi', [ApbdesController::class, 'index'])->name('transparansi');
 
-// Modul Berita (Fahmi)
+// Modul Berita
 Route::get('/berita', [BeritaController::class, 'index'])->name('berita');
 Route::get('/berita/{id}', [BeritaController::class, 'show'])->name('berita.detail');
+Route::post('/berita/{id}/baca', [BeritaController::class, 'incrementView'])->name('berita.incrementView');
 
 // Modul Layanan Surat (Fahmi)
 Route::get('/layanan', [LayananSuratController::class, 'index'])->name('layanan');

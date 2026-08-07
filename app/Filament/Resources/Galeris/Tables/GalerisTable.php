@@ -18,29 +18,41 @@ class GalerisTable
         return $table
             ->columns([
                 ImageColumn::make('foto')
-                    ->label('Foto')
+                    ->label('Foto Kegiatan')
                     ->disk('public')
-                    ->square(),
+                    ->height(48)
+                    ->width(72)
+                    ->extraImgAttributes(['class' => 'rounded-lg object-cover shadow-xs']),
 
                 TextColumn::make('judul')
-                    ->label('Judul')
+                    ->label('Judul Dokumentasi')
                     ->searchable()
                     ->sortable()
-                    ->limit(40)
+                    ->weight('bold')
+                    ->limit(45)
                     ->placeholder('(Tanpa judul)'),
 
                 TextColumn::make('kategori')
                     ->label('Kategori')
                     ->badge()
+                    ->color(fn (string $state): string => match (strtolower($state)) {
+                        'pembangunan' => 'warning',
+                        'pemberdayaan' => 'success',
+                        'kesehatan' => 'info',
+                        'pemerintahan' => 'primary',
+                        default => 'gray',
+                    })
                     ->sortable(),
 
                 TextColumn::make('lokasi')
-                    ->label('Lokasi')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Lokasi / Dusun')
+                    ->icon('heroicon-o-map-pin')
+                    ->sortable(),
 
                 TextColumn::make('tanggal')
                     ->label('Tanggal')
                     ->date('d M Y')
+                    ->icon('heroicon-o-calendar')
                     ->sortable(),
             ])
             ->filters([

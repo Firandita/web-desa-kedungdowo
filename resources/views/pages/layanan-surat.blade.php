@@ -306,6 +306,8 @@
         document.getElementById('modalDescription').innerText = description;
         document.getElementById('modalDownloadBtn').setAttribute('href', downloadUrl);
 
+        document.body.style.overflow = 'hidden';
+
         // Tampilkan modal dengan animasi soft fade-in
         modal.classList.remove('hidden');
         setTimeout(() => {
@@ -323,6 +325,7 @@
         
         setTimeout(() => {
             modal.classList.add('hidden');
+            document.body.style.overflow = '';
         }, 150);
     }
 

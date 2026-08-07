@@ -17,23 +17,36 @@ class LayananSuratsTable
         return $table
             ->columns([
                 TextColumn::make('nama_surat')
-                    ->label('Nama Surat')
+                    ->label('Nama Layanan Surat')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->weight('bold'),
 
                 TextColumn::make('kode_surat')
                     ->label('Kode')
                     ->badge()
-                    ->color('gray'),
+                    ->color('primary')
+                    ->icon('heroicon-o-tag')
+                    ->searchable(),
 
                 TextColumn::make('kategori')
                     ->label('Kategori')
                     ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Kependudukan' => 'info',
+                        'Kesejahteraan Sosial' => 'success',
+                        'Pernikahan' => 'warning',
+                        'Usaha & Ekonomi' => 'emerald',
+                        default => 'gray',
+                    })
                     ->sortable(),
 
                 TextColumn::make('estimasi_waktu')
                     ->label('Estimasi Waktu')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->badge()
+                    ->color('gray')
+                    ->icon('heroicon-o-clock')
+                    ->sortable(),
 
                 TextColumn::make('created_at')
                     ->label('Dibuat')

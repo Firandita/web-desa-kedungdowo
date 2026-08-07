@@ -242,16 +242,19 @@
 <!-- ========================================================================= -->
 <!-- MODAL POP-UP LIGHTBOX PREVIEW FOTO BESAR + NAVIGASI PREV/NEXT -->
 <!-- ========================================================================= -->
-<div id="galleryModal" class="fixed inset-0 z-50 hidden bg-black/85 flex items-center justify-center p-4 backdrop-blur-md transition-all duration-300">
-    <div class="bg-white rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl relative border border-white/20 transform scale-95 transition-transform duration-300" id="galleryModalCard">
+<div id="galleryModal" class="fixed inset-0 z-50 hidden bg-black/85 flex items-center justify-center p-4 backdrop-blur-md transition-all duration-300 overscroll-contain">
+    <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[85vh] overflow-y-auto overscroll-contain shadow-2xl relative border border-white/20 transform scale-95 transition-transform duration-300 custom-scrollbar" id="galleryModalCard">
 
-        <button onclick="closeGalleryModal()" class="absolute top-4 right-4 z-20 bg-black/60 text-white hover:bg-red-600 rounded-full p-2 transition-all shadow-md cursor-pointer">
-            <span class="material-symbols-outlined block text-xl">close</span>
-        </button>
+        {{-- Tombol Close Sticky --}}
+        <div class="sticky top-3 z-30 flex justify-end px-3 pointer-events-none h-0">
+            <button onclick="closeGalleryModal()" class="w-9 h-9 bg-black/60 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-all shadow-md cursor-pointer pointer-events-auto">
+                <span class="material-symbols-outlined block text-xl">close</span>
+            </button>
+        </div>
 
         <div class="flex flex-col">
-            <div class="w-full bg-neutral-900 flex items-center justify-center min-h-[50vh] max-h-[65vh] relative overflow-hidden group">
-                <img src="" id="modalLargeImg" class="w-full h-full object-contain max-h-[65vh]" alt="Gambar Kegiatan Besar">
+            <div class="w-full bg-neutral-900 flex items-center justify-center min-h-[45vh] max-h-[60vh] relative overflow-hidden group shrink-0">
+                <img src="" id="modalLargeImg" class="w-full h-full object-contain max-h-[60vh]" alt="Gambar Kegiatan Besar">
 
                 <button onclick="navigateGallery(-1)" id="prevGalleryBtn" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-[var(--sawah)] text-white p-2.5 rounded-full transition-all shadow-lg border border-white/20 cursor-pointer">
                     <span class="material-symbols-outlined text-2xl block">chevron_left</span>
@@ -398,6 +401,9 @@
         const modal = document.getElementById('galleryModal');
         const card = document.getElementById('galleryModalCard');
 
+        // Lock body scroll
+        document.body.style.overflow = 'hidden';
+
         modal.classList.remove('hidden');
         setTimeout(() => {
             card.classList.remove('scale-95');
@@ -421,6 +427,8 @@
 
         setTimeout(() => {
             modal.classList.add('hidden');
+            // Unlock body scroll
+            document.body.style.overflow = '';
         }, 150);
     }
 

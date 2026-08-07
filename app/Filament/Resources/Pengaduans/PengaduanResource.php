@@ -18,7 +18,26 @@ class PengaduanResource extends Resource
 {
     protected static ?string $model = Pengaduan::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $navigationLabel = 'Pengaduan Warga';
+
+    protected static ?string $modelLabel = 'Pengaduan';
+
+    protected static ?string $pluralModelLabel = 'Pengaduan Warga';
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChatBubbleLeftRight;
+
+    protected static ?int $navigationSort = 4;
+
+    public static function getNavigationBadge(): ?string
+    {
+        $pendingCount = static::getModel()::where('status', 'pending')->count();
+        return $pendingCount > 0 ? (string) $pendingCount : null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning';
+    }
 
     public static function form(Schema $schema): Schema
     {

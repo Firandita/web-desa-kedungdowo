@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Pengaduans\Schemas;
 
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
@@ -15,11 +16,11 @@ class PengaduanForm
     {
         return $schema
             ->components([
-                Section::make('Data Pelapor')
+                Section::make('Informasi Pelapor & Tiket')
                     ->columns(2)
                     ->components([
                         TextInput::make('nomor_tiket')
-                            ->label('Nomor Tiket')
+                            ->label('Nomor Tiket Pengaduan')
                             ->disabled()
                             ->dehydrated(false)
                             ->columnSpanFull(),
@@ -30,55 +31,67 @@ class PengaduanForm
                             ->maxLength(255),
 
                         TextInput::make('no_whatsapp')
-                            ->label('No. WhatsApp')
+                            ->label('No. WhatsApp / Kontak')
                             ->tel()
                             ->required()
                             ->maxLength(30),
 
                         Toggle::make('is_anonim')
-                            ->label('Laporan Anonim')
+                            ->label('Status Anonim (Rahasiakan Identitas)')
                             ->disabled(),
 
                         Select::make('tipe_laporan')
                             ->label('Tipe Laporan')
                             ->options([
-                                'pengaduan' => 'Pengaduan',
-                                'aspirasi' => 'Aspirasi',
-                                'pertanyaan' => 'Pertanyaan',
+                                'pengaduan' => 'Pengaduan / Keluhan',
+                                'aspirasi' => 'Aspirasi / Saran',
+                                'pertanyaan' => 'Pertanyaan / Informasi',
                             ])
                             ->required(),
                     ]),
 
-                Section::make('Isi Laporan')
+                Section::make('Rincian Laporan & Lampiran Bukti')
+                    ->columns(2)
                     ->components([
                         TextInput::make('kategori')
-                            ->label('Kategori')
-                            ->maxLength(100),
+                            ->label('Kategori Pengaduan')
+                            ->maxLength(100)
+                            ->columnSpanFull(),
 
                         Textarea::make('isi_laporan')
-                            ->label('Isi Laporan')
+                            ->label('Isi Laporan / Pesan Warga')
                             ->required()
-                            ->rows(4)
+                            ->rows(5)
+                            ->columnSpanFull(),
+
+                        FileUpload::make('file_lampiran')
+                            ->label('Foto / Dokumen Bukti Lampiran Warga')
+                            ->disk('public')
+                            ->directory('pengaduan')
+                            ->image()
+                            ->openable()
+                            ->downloadable()
                             ->columnSpanFull(),
                     ]),
 
-                Section::make('Tindak Lanjut Admin')
+                Section::make('Tindak Lanjut & Respon Resmi Pemdes')
                     ->columns(2)
                     ->components([
                         Select::make('status')
-                            ->label('Status')
+                            ->label('Status Penanganan')
                             ->options([
-                                'pending' => 'Menunggu',
-                                'proses' => 'Diproses',
-                                'selesai' => 'Selesai',
-                                'ditolak' => 'Ditolak',
+                                'pending' => 'Menunggu Verifikasi',
+                                'proses' => 'Sedang Diproses',
+                                'selesai' => 'Selesai Ditindaklanjuti',
+                                'ditolak' => 'Ditolak / Tidak Valid',
                             ])
                             ->default('pending')
                             ->required(),
 
                         Textarea::make('tanggapan')
-                            ->label('Tanggapan Admin')
-                            ->rows(3)
+                            ->label('Tanggapan Resmi Admin / Pemdes')
+                            ->placeholder('Tuliskan jawaban atau langkah penanganan dari Pemdes Kedungdowo...')
+                            ->rows(4)
                             ->columnSpanFull(),
                     ]),
             ]);

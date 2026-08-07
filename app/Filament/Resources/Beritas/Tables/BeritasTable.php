@@ -18,39 +18,50 @@ class BeritasTable
         return $table
             ->columns([
                 ImageColumn::make('foto')
-                    ->label('Foto')
+                    ->label('Foto Sampul')
                     ->disk('public')
-                    ->square(),
+                    ->height(48)
+                    ->width(72)
+                    ->extraImgAttributes(['class' => 'rounded-lg object-cover shadow-xs']),
 
                 TextColumn::make('judul')
-                    ->label('Judul')
+                    ->label('Judul Berita')
                     ->searchable()
                     ->sortable()
-                    ->limit(40),
+                    ->weight('bold')
+                    ->limit(45)
+                    ->tooltip(fn ($record) => $record->judul),
 
                 TextColumn::make('kategori')
                     ->label('Kategori')
                     ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Kegiatan', 'Kegiatan Desa' => 'info',
+                        'Pemberdayaan' => 'success',
+                        'Kesehatan' => 'warning',
+                        'Lingkungan' => 'emerald',
+                        'Digitalisasi' => 'primary',
+                        'Pengumuman' => 'danger',
+                        default => 'gray',
+                    })
                     ->sortable(),
 
                 TextColumn::make('tanggal')
-                    ->label('Tanggal')
+                    ->label('Tanggal Terbit')
                     ->date('d M Y')
+                    ->sortable()
+                    ->icon('heroicon-o-calendar'),
+
+                TextColumn::make('dilihat')
+                    ->label('Dibaca')
+                    ->numeric()
+                    ->badge()
+                    ->color('gray')
+                    ->icon('heroicon-o-eye')
                     ->sortable(),
 
                 TextColumn::make('penulis')
                     ->label('Penulis')
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('dilihat')
-                    ->label('Dilihat')
-                    ->numeric()
-                    ->sortable(),
-
-                TextColumn::make('created_at')
-                    ->label('Dibuat')
-                    ->dateTime('d M Y, H:i')
-                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('tanggal', 'desc')

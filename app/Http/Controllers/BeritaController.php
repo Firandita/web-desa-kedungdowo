@@ -61,4 +61,17 @@ class BeritaController extends Controller
             'fromDb' => $fromDb,
         ]);
     }
+
+    public function incrementView($id)
+    {
+        $berita = Berita::find($id);
+        if ($berita) {
+            $berita->increment('dilihat');
+            return response()->json([
+                'success' => true,
+                'dilihat' => $berita->dilihat,
+            ]);
+        }
+        return response()->json(['success' => false], 404);
+    }
 }

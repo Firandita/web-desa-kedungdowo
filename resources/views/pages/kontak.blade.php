@@ -435,6 +435,35 @@
 </div>
 
 <!-- ========================================================================= -->
+<!-- MODAL POP-UP: NOTIFIKASI GAGAL KIRIM PESAN -->
+<!-- ========================================================================= -->
+<div id="errorModal" class="fixed inset-0 z-50 hidden bg-black/70 flex items-center justify-center p-4 backdrop-blur-xs transition-all duration-300">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl transform scale-95 transition-transform duration-300 space-y-4" id="errorModalCard">
+
+        <div class="w-14 h-14 bg-red-50 text-red-600 rounded-full flex items-center justify-center mx-auto shadow-xs">
+            <span class="material-symbols-outlined text-3xl">error</span>
+        </div>
+
+        <div class="space-y-1">
+            <h3 class="font-display font-bold text-lg text-[var(--teks)] uppercase tracking-tight">Laporan Gagal Terkirim</h3>
+            <p class="text-xs text-[var(--teks)]/60 leading-relaxed" id="errorModalMessage">
+                Terjadi kendala jaringan atau server sehingga laporan Anda BELUM tercatat di sistem. Data yang sudah Anda isi masih tersimpan di formulir, silakan coba kirim ulang.
+            </p>
+            <p class="text-[11px] text-[var(--teks)]/50 pt-1">Jika terus gagal, sampaikan langsung lewat WhatsApp perangkat desa di kolom kiri halaman ini.</p>
+        </div>
+
+        <div class="flex flex-col gap-2">
+            <button onclick="closeErrorModal()" class="w-full bg-[var(--sawah-dark)] hover:bg-[var(--sawah)] text-white font-bold text-xs py-3 rounded-xl transition-colors shadow-xs cursor-pointer">
+                Coba Lagi
+            </button>
+            <a href="https://wa.me/6282150208664?text=Halo%20Admin%20Desa%20Kedungdowo%2C%20saya%20mau%20mengirim%20pengaduan%20tapi%20formulir%20online%20gagal" target="_blank" rel="noopener noreferrer" class="w-full bg-[var(--krem)] hover:bg-[var(--sawah)]/10 text-[var(--sawah-dark)] font-bold text-xs py-3 rounded-xl transition-colors shadow-xs cursor-pointer">
+                Kirim Lewat WhatsApp
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================================================= -->
 <!-- JAVASCRIPT HANDLER -->
 <!-- ========================================================================= -->
 <script>
@@ -507,47 +536,69 @@
                 'Accept': 'application/json'
             }
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                document.getElementById('ticketNumber').innerText = data.nomor_tiket;
-
-                // Show Modal
-                const modal = document.getElementById('successModal');
-                const card = document.getElementById('successModalCard');
-
-                modal.classList.remove('hidden');
-                setTimeout(() => {
-                    card.classList.remove('scale-95');
-                    card.classList.add('scale-100');
-                }, 10);
-
-                // Reset Form
-                form.reset();
-                document.getElementById('charCounter').innerText = "0 / 1000 Karakter";
-                document.getElementById('fileUploadText').innerHTML = `<span class="material-symbols-outlined text-lg text-[var(--sawah-dark)]">cloud_upload</span> <span>Klik untuk memilih foto bukti/dokumen (JPG, PNG, PDF maks. 5MB)</span>`;
-                
-                const inputNama = document.getElementById('inputNama');
-                inputNama.readOnly = false;
-                inputNama.classList.remove('opacity-60', 'bg-slate-100');
-            } else {
-                alert(data.message || 'Terjadi kesalahan saat mengirim pengaduan.');
+        .then(async response => {
+            // Coba parse body sebagai JSON apapun status code-nya (Laravel
+            // mengirim JSON juga untuk error validasi 422 & error server 500).
+            let data = null;
+            try {
+                data = await response.json();
+            } catch (parseError) {
+                // Body bukan JSON (misal HTML error page) -> anggap gagal generik.
+                data = null;
             }
-        })
-        .catch(error => {
-            console.error('Error submitting form:', error);
-            // Fallback Ticket Number
-            const randomNum = Math.floor(1000 + Math.random() * 9000);
-            document.getElementById('ticketNumber').innerText = `KDD-2026-${randomNum}`;
 
+            if (!response.ok || !data || !data.success) {
+                // Request sampai ke server tapi GAGAL (validasi, 500, dst).
+                const message = (data && data.message)
+                    ? data.message
+                    : (response.status === 422
+                        ? 'Ada data yang belum valid, silakan periksa kembali isian formulir.'
+                        : 'Server mengalami kendala saat menyimpan laporan Anda.');
+                throw new Error(message);
+            }
+
+            return data;
+        })
+        .then(data => {
+            // HANYA sampai sini kalau server benar-benar konfirmasi sukses.
+            document.getElementById('ticketNumber').innerText = data.nomor_tiket;
+
+            // Show Modal Sukses
             const modal = document.getElementById('successModal');
             const card = document.getElementById('successModalCard');
+
             modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
             setTimeout(() => {
                 card.classList.remove('scale-95');
                 card.classList.add('scale-100');
             }, 10);
+
+            // Reset Form
             form.reset();
+            document.getElementById('charCounter').innerText = "0 / 1000 Karakter";
+            document.getElementById('fileUploadText').innerHTML = `<span class="material-symbols-outlined text-lg text-[var(--sawah-dark)]">cloud_upload</span> <span>Klik untuk memilih foto bukti/dokumen (JPG, PNG, PDF maks. 5MB)</span>`;
+
+            const inputNama = document.getElementById('inputNama');
+            inputNama.readOnly = false;
+            inputNama.classList.remove('opacity-60', 'bg-slate-100');
+        })
+        .catch(error => {
+            console.error('Error submitting form:', error);
+
+            const errorMessage = document.getElementById('errorModalMessage');
+            errorMessage.innerText = error.message && error.message !== 'Failed to fetch'
+                ? error.message
+                : 'Tidak dapat terhubung ke server. Periksa koneksi internet Anda, data yang sudah diisi masih tersimpan di formulir ini.';
+
+            const modal = document.getElementById('errorModal');
+            const card = document.getElementById('errorModalCard');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                card.classList.remove('scale-95');
+                card.classList.add('scale-100');
+            }, 10);
         })
         .finally(() => {
             // Reset Button
@@ -556,6 +607,19 @@
             submitBtnIcon.classList.remove('animate-spin');
             submitBtnText.innerText = "Kirim Pengaduan Sekarang";
         });
+    }
+
+    function closeErrorModal() {
+        const modal = document.getElementById('errorModal');
+        const card = document.getElementById('errorModalCard');
+
+        card.classList.remove('scale-100');
+        card.classList.add('scale-95');
+
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }, 150);
     }
 
     function closeSuccessModal() {
@@ -567,6 +631,7 @@
 
         setTimeout(() => {
             modal.classList.add('hidden');
+            document.body.style.overflow = '';
         }, 150);
     }
 
