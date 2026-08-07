@@ -7,9 +7,15 @@ use App\Http\Controllers\LayananSuratController;
 use App\Http\Controllers\KontakController;
 use App\Http\Controllers\UmkmController;
 use App\Http\Controllers\ApbdesController;
+use App\Models\ProfilDesa;
 
 Route::get('/', function () {
-    return view('pages.beranda');
+    // Statistik ringkas (jumlah penduduk, KK, dll) diambil dari tabel
+    // profil_desa -- SUMBER YANG SAMA dengan yang dipakai halaman
+    // Transparansi, supaya angkanya selalu konsisten di kedua halaman.
+    $profil = ProfilDesa::first();
+
+    return view('pages.beranda', ['profil' => $profil]);
 })->name('beranda');
 
 Route::get('/profil', function () {

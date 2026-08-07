@@ -109,27 +109,32 @@
 })();
 </script>
 
-{{-- STATISTIK RINGKAS --}}
+{{-- STATISTIK RINGKAS — sumber data SAMA dengan halaman Transparansi
+     (tabel profil_desa), supaya angkanya selalu konsisten di 2 halaman --}}
 <section class="bg-[var(--sawah)] text-white py-8">
   <div class="max-w-7xl mx-auto px-5 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
     <div data-aos="fade-up" data-aos-delay="0">
-      <p class="font-section text-3xl font-extrabold text-[var(--panen)]">3.214</p>
+      <p class="font-section text-3xl font-extrabold text-[var(--panen)]">{{ $profil ? number_format($profil->jumlah_penduduk, 0, ',', '.') : '—' }}</p>
       <p class="text-xs md:text-sm text-white/80 mt-1">Jumlah Penduduk</p>
     </div>
     <div data-aos="fade-up" data-aos-delay="75">
-      <p class="font-section text-3xl font-extrabold text-[var(--panen)]">982</p>
+      <p class="font-section text-3xl font-extrabold text-[var(--panen)]">{{ $profil ? number_format($profil->jumlah_kk, 0, ',', '.') : '—' }}</p>
       <p class="text-xs md:text-sm text-white/80 mt-1">Kepala Keluarga</p>
     </div>
     <div data-aos="fade-up" data-aos-delay="150">
-      <p class="font-section text-3xl font-extrabold text-[var(--panen)]">4</p>
+      <p class="font-section text-3xl font-extrabold text-[var(--panen)]">{{ $profil->jumlah_dusun ?? 4 }}</p>
       <p class="text-xs md:text-sm text-white/80 mt-1">Dusun</p>
     </div>
     <div data-aos="fade-up" data-aos-delay="225">
-      <p class="font-section text-3xl font-extrabold text-[var(--panen)]">300+</p>
+      <p class="font-section text-3xl font-extrabold text-[var(--panen)]">{{ $profil ? number_format($profil->jumlah_ternak_sapi, 0, ',', '.') : '—' }}</p>
       <p class="text-xs md:text-sm text-white/80 mt-1">Ekor Sapi Ternak Warga</p>
     </div>
   </div>
-  <p class="text-center text-white/50 text-xs mt-4">*Data contoh (dummy) — akan diganti data resmi dari perangkat desa</p>
+  @if (!$profil)
+    <p class="text-center text-white/50 text-xs mt-4">*Data belum diinput admin — buka /admin, menu "Statistik Desa"</p>
+  @else
+    <p class="text-center text-white/50 text-xs mt-4">*Data diperbarui: {{ $profil->updated_at->translatedFormat('d F Y') }}</p>
+  @endif
 </section>
 
 {{-- SAMBUTAN KADES (ringkas, versi lengkap di halaman Profil) --}}
