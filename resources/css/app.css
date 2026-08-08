@@ -132,3 +132,24 @@ a{ text-decoration:none; }
   vertical-align: middle;
   line-height: 1;
 }
+
+/* Custom Scrollbar untuk Modal & Kontainer Scroll */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(47, 82, 51, 0.3);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(47, 82, 51, 0.6);
+}
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(47, 82, 51, 0.4) transparent;
+}
