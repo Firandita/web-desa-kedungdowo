@@ -43,7 +43,7 @@ class BeritaController extends Controller
         $berita = Berita::find($id);
 
         if ($berita) {
-            $berita->increment('dilihat');
+            $this->recordView($berita);
             $fromDb = true;
         } else {
             $daftarBerita = include resource_path('views/pages/berita-data.php');
@@ -66,12 +66,30 @@ class BeritaController extends Controller
     {
         $berita = Berita::find($id);
         if ($berita) {
-            $berita->increment('dilihat');
+            $incremented = $this->recordView($berita);
             return response()->json([
-                'success' => true,
-                'dilihat' => $berita->dilihat,
+                'success'     => true,
+                'dilihat'     => $berita->dilihat,
+                'incremented' => $incremented,
             ]);
         }
         return response()->json(['success' => false], 404);
+    }
+
+    /**
+     * Merekam jumlah pembaca (views) hanya 1x per sesi pengguna
+     * untuk mencegah pencatatan ganda saat klik pop-up & baca selengkapnya.
+     */
+    private function recordView(Berita $berita): bool
+    {
+        $sessionKey = 'viewed_berita_' . $berita->id;
+
+        if (!session()->has($sessionKey)) {
+            $berita->increment('dilihat');
+            session()->put($sessionKey, true);
+            return true; // Berhasil ditambah 1 view baru
+        }
+
+        return false; // Sudah pernah dihitung pada sesi ini (tidak dihitung ulang)
     }
 }

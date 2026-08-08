@@ -87,8 +87,13 @@
                     {{-- GANTI: Foto sorotan "{{ $featured->judul }}" -> public/img/{{ $featured->foto }} --}}
                     <img src="{{ $buildFotoUrl($featured) }}"
                          alt="{{ $featured->judul }}"
-                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 img-slot"
-                         onerror="this.classList.add('img-slot')">
+                         class="w-full h-full object-cover ring-1 ring-inset ring-white/10 group-hover:scale-105 transition-transform duration-700"
+                         onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden'); this.nextElementSibling.classList.add('flex');">
+                    {{-- Fallback kalau foto belum ada -- full-bleed; teks gelap karena pattern-nya cream/terang --}}
+                    <div class="hidden absolute inset-0 foto-fallback flex-col items-center justify-center gap-2 text-[var(--sawah-dark)]/40">
+                        <span class="material-symbols-outlined text-4xl">image</span>
+                        <span class="text-xs font-bold uppercase tracking-wide">Foto Segera Hadir</span>
+                    </div>
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                     <div class="absolute top-4 left-4 flex items-center gap-2">
                         <span class="bg-[var(--panen)] text-[var(--sawah-dark)] font-bold text-[10px] uppercase tracking-widest px-3 py-1 rounded-full shadow-xs flex items-center gap-1">
@@ -183,8 +188,13 @@
                 <div class="h-48 sm:h-52 w-full overflow-hidden bg-[var(--sawah)]/10 relative">
                     <img src="{{ $buildFotoUrl($item) }}"
                          alt="{{ $item->judul }}"
-                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 img-slot"
-                         onerror="this.classList.add('img-slot')">
+                         class="w-full h-full object-cover ring-1 ring-inset ring-black/5 transition-transform duration-500 group-hover:scale-105"
+                         onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden'); this.nextElementSibling.classList.add('flex');">
+                    {{-- Fallback kalau foto belum ada -- full-bleed, tanpa teks judul yang bisa numpuk badge --}}
+                    <div class="hidden absolute inset-0 foto-fallback flex-col items-center justify-center gap-1.5 text-[var(--sawah-dark)]/40">
+                        <span class="material-symbols-outlined text-2xl">image</span>
+                        <span class="text-[10px] font-bold uppercase tracking-wide">Foto Segera Hadir</span>
+                    </div>
 
                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                         <span class="bg-white/90 text-[var(--sawah-dark)] font-bold text-xs px-3.5 py-2 rounded-xl shadow-md flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
@@ -242,19 +252,28 @@
 <!-- ========================================================================= -->
 <!-- MODAL POP-UP LIGHTBOX PREVIEW FOTO BESAR + NAVIGASI PREV/NEXT -->
 <!-- ========================================================================= -->
-<div id="galleryModal" class="fixed inset-0 z-50 hidden bg-black/85 flex items-center justify-center p-4 backdrop-blur-md transition-all duration-300 overscroll-contain">
-    <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[85vh] overflow-y-auto overscroll-contain shadow-2xl relative border border-white/20 transform scale-95 transition-transform duration-300 custom-scrollbar" id="galleryModalCard">
+<div id="galleryModal" class="fixed inset-0 z-50 hidden bg-black/85 flex items-center justify-center p-4 backdrop-blur-md transition-all duration-300">
+    <div class="bg-white rounded-3xl max-w-4xl w-full shadow-2xl relative border border-white/20 transform scale-95 transition-transform duration-300 max-h-[90vh] flex flex-col overflow-hidden" id="galleryModalCard">
 
-        {{-- Tombol Close Sticky --}}
-        <div class="sticky top-3 z-30 flex justify-end px-3 pointer-events-none h-0">
-            <button onclick="closeGalleryModal()" class="w-9 h-9 bg-black/60 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-all shadow-md cursor-pointer pointer-events-auto">
-                <span class="material-symbols-outlined block text-xl">close</span>
-            </button>
-        </div>
+        <button onclick="closeGalleryModal()" class="absolute top-4 right-4 z-20 bg-black/60 text-white hover:bg-red-600 rounded-full p-2 transition-all shadow-md cursor-pointer">
+            <span class="material-symbols-outlined block text-xl">close</span>
+        </button>
 
-        <div class="flex flex-col">
-            <div class="w-full bg-neutral-900 flex items-center justify-center min-h-[45vh] max-h-[60vh] relative overflow-hidden group shrink-0">
-                <img src="" id="modalLargeImg" class="w-full h-full object-contain max-h-[60vh]" alt="Gambar Kegiatan Besar">
+        {{--
+          SATU area scroll untuk foto + detail (digabung) supaya foto ikut
+          kegeser saat discroll, dan [overscroll-behavior:contain] mencegah
+          scroll "bocor" ke halaman galeri di belakang begitu mentok.
+        --}}
+        <div class="flex flex-col overflow-y-auto [overscroll-behavior:contain]">
+            <div class="w-full bg-neutral-900 flex items-center justify-center min-h-[50vh] max-h-[65vh] relative overflow-hidden group shrink-0">
+                <img src="" id="modalLargeImg" class="w-full h-full object-contain max-h-[65vh] ring-1 ring-inset ring-white/10"
+                     alt="Gambar Kegiatan Besar"
+                     onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden'); this.nextElementSibling.classList.add('flex');">
+                {{-- Fallback kalau foto belum ada -- full-bleed di atas latar gelap modal --}}
+                <div id="modalLargeImgFallback" class="hidden absolute inset-0 foto-fallback flex-col items-center justify-center gap-2 text-[var(--sawah-dark)]/40">
+                    <span class="material-symbols-outlined text-5xl">image</span>
+                    <span class="text-xs font-bold uppercase tracking-wide">Foto Segera Hadir</span>
+                </div>
 
                 <button onclick="navigateGallery(-1)" id="prevGalleryBtn" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-[var(--sawah)] text-white p-2.5 rounded-full transition-all shadow-lg border border-white/20 cursor-pointer">
                     <span class="material-symbols-outlined text-2xl block">chevron_left</span>
@@ -394,6 +413,12 @@
         document.getElementById('modalGalleryDate').innerHTML = `<span class="material-symbols-outlined text-sm">calendar_today</span> ${data.date}`;
         document.getElementById('modalGalleryLocation').innerHTML = `<span class="material-symbols-outlined text-xs">location_on</span> ${data.location}`;
         document.getElementById('modalLargeImg').setAttribute('src', data.imgUrl);
+        // Reset state gambar (kalau item sebelumnya sempat gagal load foto).
+        const modalImg = document.getElementById('modalLargeImg');
+        modalImg.classList.remove('hidden');
+        const modalImgFallback = document.getElementById('modalLargeImgFallback');
+        modalImgFallback.classList.add('hidden');
+        modalImgFallback.classList.remove('flex');
 
         const badge = document.getElementById('modalGalleryCategoryBadge');
         badge.innerText = data.categoryName;
@@ -401,8 +426,11 @@
         const modal = document.getElementById('galleryModal');
         const card = document.getElementById('galleryModalCard');
 
-        // Lock body scroll
+        // Kunci scroll halaman belakang selagi modal terbuka, supaya scroll
+        // wheel tidak pernah "bocor" ke grid galeri di belakang overlay.
+        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
         document.body.style.overflow = 'hidden';
+        if (scrollbarWidth > 0) document.body.style.paddingRight = scrollbarWidth + 'px';
 
         modal.classList.remove('hidden');
         setTimeout(() => {
@@ -425,10 +453,12 @@
         card.classList.remove('scale-100');
         card.classList.add('scale-95');
 
+        // Buka kunci scroll halaman belakang.
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+
         setTimeout(() => {
             modal.classList.add('hidden');
-            // Unlock body scroll
-            document.body.style.overflow = '';
         }, 150);
     }
 
